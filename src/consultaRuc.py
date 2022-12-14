@@ -1,58 +1,82 @@
 from playwright.sync_api import sync_playwright
-
-url="https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp"
-url2="https://enlinea.sunarp.gob.pe/sunarpweb/pages/acceso/ingreso.faces"
 rucNotFound=True
-with sync_playwright() as p:
-    global browser,context,page
-    browser = p.chromium.launch(headless=False)
-    context = browser.new_context()
+class scrapingPages:
+    def __init__(self):
+        self.urlSunat="https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp"
+        self.urlSunarp="https://enlinea.sunarp.gob.pe/sunarpweb/pages/acceso/ingreso.faces"
+        self.elDni='https://eldni.com/pe/buscar-por-dni'
+        self.userSunarp="leonelcg03"
+        self.passSunarp="leonelcg03"
+        self.browser=None
+        self.context=None
+        self.pageSunat=None
+        self.pageSunarp=None
+        self.pageDni=None
+    def scrapInpages(self):
+        with sync_playwright() as p:
+            self.browser = p.chromium.launch(headless=False)
+            self.context = self.browser.new_context()
+            # starting pages ready to use a loop of search
+            self.start_sunat()
+            self.start_Sunarp()
+            self.start_elDni()
             # Open new page
-    page = context.new_page()
-    while rucNotFound:
-        try:
-            page.goto(url)
-            page.query_selector("input#txtRuc").fill("20256149681")
-            page.query_selector("button#btnAceptar").click()
-            page.wait_for_timeout(1000)
-            page.wait_for_selector("div.col-sm-7 h4",timeout=2000)
-            entire_name=page.query_selector("div.col-sm-7 h4").inner_text()
-            rucNotFound=False
-        except:
-            print("Ruc not found")
-
-    print(entire_name)
-    page2 = context.new_page()
-    page2.goto(url2)
-    page2.query_selector("input[name='username']").fill("leonelcg03")
-    page2.query_selector("input[name='password']").fill("leonelcg03")
-    page2.query_selector("td.Ingresar").click()
-    page2.wait_for_timeout(1000)
-    #print(page2.url)
-    frame=page2.frame(name='left_frame')
-    frame.locator("//a[contains(text(),'Solicitar certificado literal de partida(copia literal)')]").click()
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
-    # Select 70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
-    # Click button[role="button"]:has-text("Solicitar")
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
-    # Select 01|01
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
-    # Check [id="frmPartidaDirecta\:radioPartida\:1"]
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill("00128244")
-    page2.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
-    frame2=page2.frame(name="main_frame1")
-    frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
-    direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
-    print(direc)
-
-    page3=context.new_page()
-    page3.goto("https://eldni.com/")
-    page3.query_selector("input#dni").fill("48023851")
-    page3.query_selector("button[form='buscar-por-dni']").click()
-    page3.wait_for_load_state()
-    nombreCompleto=page3.query_selector("input#completos").get_attribute("value")
-    print(nombreCompleto)
-    page2.pause()
+            self.get_rucSunat()
+            self.get_sunarpp()
+            self.get_dniName()
+    def start_sunat(self):
+        self.pageSunat = self.context.new_page()
+        self.pageSunat.goto(self.urlSunat)
+    def get_rucSunat(self):
+        rucNotFound=True
+        while rucNotFound:
+            try:
+                self.pageSunat.query_selector("input#txtRuc").fill("")
+                self.pageSunat.query_selector("input#txtRuc").fill("20256149681")
+                self.pageSunat.query_selector("button#btnAceptar").click()
+                self.pageSunat.wait_for_timeout(1000)
+                self.pageSunat.wait_for_selector("div.col-sm-7 h4",timeout=2000)
+                rucName=self.pageSunat.query_selector("div.col-sm-7 h4").inner_text()
+                print(rucName)
+                self.pageSunat.query_selector("button[class='btn btn-danger btnNuevaConsulta']").click()
+                rucNotFound=False
+            except:
+                print("Ruc not found")
+    def start_Sunarp(self):
+        self.pageSunarp = self.context.new_page()
+        self.pageSunarp.goto(self.urlSunarp)
+        self.pageSunarp.query_selector("input[name='username']").fill(self.userSunarp)
+        self.pageSunarp.query_selector("input[name='password']").fill(self.passSunarp)
+        self.pageSunarp.query_selector("td.Ingresar").click()
+        self.pageSunarp.wait_for_timeout(1000)
+        frame=self.pageSunarp.frame(name='left_frame')
+        frame.locator("//a[contains(text(),'Solicitar certificado literal de partida(copia literal)')]").click()
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
+    def get_sunarpp(self):
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill("00128244")
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
+        frame2=self.pageSunarp.frame(name="main_frame1")
+        frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
+        direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
+        frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
+        print(direc)
+    def start_elDni(self):
+        self.pageDni = self.context.new_page()
+        self.pageDni.goto(self.elDni)
+        
+    def get_dniName(self):
+        self.pageDni.query_selector("input#dni").fill("")
+        self.pageDni.query_selector("input#dni").fill("48023851")
+        self.pageDni.query_selector("button[form='buscar-por-dni']").click()
+        self.pageDni.wait_for_load_state()
+        nombreCompleto=self.pageDni.query_selector("input#completos").get_attribute("value")
+        print(nombreCompleto)
+        self.pageDni.pause()
+        
+scrpy=scrapingPages()
+scrpy.scrapInpages()

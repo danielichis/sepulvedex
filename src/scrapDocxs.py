@@ -12,12 +12,6 @@ class dataWord:
         self.doc=docx.Document(self.kardexsPath)
         self.fullText=self.getText()
         self.configData=configData(self.configPath)
-        
-        
-        self.dnis=[]
-        self.rucs=[]
-        self.partidaE=[]
-        self.carnets=[]
 
     def getText(self):
         fullText=[]
