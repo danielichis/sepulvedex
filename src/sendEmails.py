@@ -10,10 +10,10 @@ class sendEmails:
         self.msg = EmailMessage()
         self.msg['Subject'] = 'Kardexs confrontados'
         self.msg['From'] = 'Bot Sepúlveda'
-        self.msg['To'] = 'dchaconb@uni.pe'
+        self.msg['To'] = 'dchaconb@uni.pe', 
         self.currentPathFolder = getCurrentPath()
 
-        
+
     def send(self, docx):
         docxPath = os.path.join(self.currentPathFolder, docx)
         with open(docxPath, 'rb') as f:
@@ -37,3 +37,8 @@ def getCurrentPath():
         application_path = os.path.dirname(__file__)
     application_path2 = Path(application_path)
     return application_path2.absolute()
+
+
+if __name__=='__main__':
+    x = sendEmails()
+    x.send('K42218-2.docx')
