@@ -43,15 +43,15 @@ class scrapingPages:
                     }
                     dniNames.append(dictNames)
                 if dniName!=None:
-                    dataToConfront[kardexData['kardex']]['DNI']=dniName
+                    dataToConfront[kardexData['kardex']]['DNI']=dniNames
 
                 rucsNames=[]
                 rucName=None
                 for ruc in kardexData['rucs']:
                     rucName=self.get_rucSunat(ruc)
                     dictRcus={
-                        "NRO DE RUC":ruc,
-                        "RUC ENCONTRADA":rucName,
+                        "NRO RUC":ruc,
+                        "RUC ENCONTRADO":rucName,
                     }
                     rucsNames.append(dictRcus)
                 if rucName!=None:
@@ -63,7 +63,7 @@ class scrapingPages:
                     partidName=self.get_sunarpp(partid)
                     dicpartid={
                         "NRO PARTIDA":partid,
-                        "PARTIDA ENCONTRADA":partidName
+                        "PARTIDA ENCONTRADO":partidName
                     }
                     partids.append(dicpartid)
                 if partidName!=None:
@@ -97,25 +97,27 @@ class scrapingPages:
         self.pageSunarp.query_selector("input[name='username']").fill(self.userSunarp)
         self.pageSunarp.query_selector("input[name='password']").fill(self.passSunarp)
         self.pageSunarp.query_selector("td.Ingresar").click()
+
+    def get_sunarpp(self,partida):
         self.pageSunarp.wait_for_timeout(1000)
         frame=self.pageSunarp.frame(name='left_frame')
         frame.locator("//a[contains(text(),'Solicitar certificado literal de partida(copia literal)')]").click()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
-    def get_sunarpp(self,partida):
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
-        frame2=self.pageSunarp.frame(name="main_frame1")
-        frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
-        direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
-        frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
-        print(direc)
-        return frame2
-        
+        try:
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
+            frame2=self.pageSunarp.frame(name="main_frame1")
+            frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
+            direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
+            frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
+            print(direc)
+        except:
+            direc="Not found"
     def start_elDni(self):
         self.pageDni = self.context.new_page()
         self.pageDni.goto(self.elDni)

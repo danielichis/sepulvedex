@@ -1,26 +1,137 @@
 {
-    "K42551.docx": {
-        "DNI": "LUIS ARTURO MORENO HERMOZA",
-        "RUC": "20606465310 - VEN ASISTENCIA S.A.C"
+    "D5981.docx": {},
+    "K42218.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "09750507",
+                "DNI ENCONTRADO": "JOAN MANUEL GONZALEZ PEREZ VELASCO"
+            },
+            {
+                "NRO DNI": "42538150",
+                "DNI ENCONTRADO": "GIANELLA DEL CARMEN ARAGON NU\u00d1EZ"
+            },
+            {
+                "NRO DNI": "09541342",
+                "DNI ENCONTRADO": "HUGO FABRIZIO BRIGNETI ABASOLO"
+            },
+            {
+                "NRO DNI": "10059295",
+                "DNI ENCONTRADO": "MARIE CATHERINE GONZALEZ PEREZ VELASCO"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO DE RUC": "20256149681",
+                "RUC ENCONTRADA": "20256149681 - DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - DETACH S.R.L."
+            }
+        ]
     },
-    "K42860.docx": {
-        "DNI": "DENIS ARICA SEGOVIA"
+    "K42306.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "47177635",
+                "DNI ENCONTRADO": "CESAR ANTONIO GARCIA PASTOR"
+            },
+            {
+                "NRO DNI": "40693196",
+                "DNI ENCONTRADO": "REYNA ISABEL ESPINOZA HUERTA"
+            }
+        ]
     },
-    "k42867.docx": {
-        "DNI": "LUCAS DANIEL GHERSI MURILLO"
+    "K42564.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "09295515",
+                "DNI ENCONTRADO": "SERGIO MIGUEL HUARCAYA FAJARDO"
+            }
+        ]
     },
-    "K42869.docx": {
-        "DNI": "LUCAS DANIEL GHERSI MURILLO"
+    "K42598.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "10219327",
+                "DNI ENCONTRADO": "VERONICA MARIA HENRICI VARGAS"
+            },
+            {
+                "NRO DNI": "20567804",
+                "DNI ENCONTRADO": "OLGA ELIZABETH LAOS SANTA MARIA"
+            }
+        ]
     },
-    "K42876.docx": {
-        "DNI": "LUIS ANTONIO GARAVITO PAREDES",
-        "RUC": "20100053455 - BANCO INTERNACIONAL DEL PERU-INTERBANK"
+    "K42640.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "44540063",
+                "DNI ENCONTRADO": "THAIS MAGGIOLO COOK"
+            }
+        ]
     },
-    "K42898.docx": {},
-    "K42901.docx": {},
-    "K42902.docx": {
-        "DNI": "GABRIELA DEL CARMEN SOTO HOYOS",
-        "RUC": "20132367800 - MINERA AURIFERA RETAMAS S.A."
+    "K42726.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "71849329",
+                "DNI ENCONTRADO": "GERALDINE NAOMI SALAZAR NU\u00d1EZ"
+            },
+            {
+                "NRO DNI": "47899016",
+                "DNI ENCONTRADO": "TINO CHRISTIAN MORENO MORILLO"
+            }
+        ]
     },
-    "V14431.docx": {}
+    "K42767.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "43981926",
+                "DNI ENCONTRADO": "MARLON VICTOR VIVAS ZEVALLOS"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO DE RUC": "20603453892",
+                "RUC ENCONTRADA": "Ruc not found"
+            }
+        ]
+    },
+    "K42772.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "23360004",
+                "DNI ENCONTRADO": "ALMES DEMETRIO ALTEZ ZAMBRANO"
+            },
+            {
+                "NRO DNI": "23362198",
+                "DNI ENCONTRADO": "CARMEN ROSA TORRE FLORES DE ALTEZ"
+            }
+        ]
+    },
+    "K42775.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "71490730",
+                "DNI ENCONTRADO": "ANDREA MADELEINE MANASSERO PERALTA"
+            }
+        ]
+    },
+    "K42780.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "44454651",
+                "DNI ENCONTRADO": "MARIA ISABEL GRACIELA HOSHI PAZ"
+            }
+        ]
+    },
+    "K42786.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "46162455",
+                "DNI ENCONTRADO": "NAZARET LOYOLA BENAVIDES"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO DE RUC": "20604550468",
+                "RUC ENCONTRADA": "Ruc not found"
+            }
+        ]
+    }
 }
