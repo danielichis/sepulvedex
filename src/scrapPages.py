@@ -42,8 +42,8 @@ class scrapingPages:
                     dataToConfront[kardexData['kardex']]['RUC']=rucName
                 for partid in kardexData['partidaE']:
                     partidName=self.get_sunarpp(partid)
-                    dataToConfront[kardexData['kardex']]['DNI']=partidName
-            with open('dataofWords.json', 'w') as f:
+                    dataToConfront[kardexData['kardex']]['partidE']=partidName
+            with open('dataofPages.json', 'w') as f:
                 json.dump(dataToConfront, f,indent=4)
                     
     def start_sunat(self):

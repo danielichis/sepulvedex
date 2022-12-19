@@ -1,6 +1,7 @@
 import docx
 from utilities import configData
 from utilities import pathsManager
+import json
 #from scrapPages import scrapingPages
 import os
 import re
@@ -27,25 +28,25 @@ class dataWord:
         dnislist=[]
         if typeKeys=="DNIS":
             n=8
-            midpattern=""
+            midpattern=r" "
             pass
         elif typeKeys=="RUCS":
             n=11
-            midpattern=""
+            midpattern=r" "
             pass
         elif typeKeys=="PARTIDAS":
             n=8
-            midpattern=".*"
+            midpattern=r".*"
             pass
         elif typeKeys=="CES":
             pass
-            midpattern=""
+            midpattern=r" "
             n=9
         #self.fullText="DOCUMENTO NACIONAL DE IDENTIDAD NUMERO 12345678"
         for nameKey in nameKeys:
             if nameKey!="":
-                reguexStr='(\d{%s})' % n
-                pattern = r'%s %s%s' % (nameKey,midpattern, reguexStr)
+                reguexStr=r'(\d{%s})' % n
+                pattern = r'%s%s%s' % (nameKey,midpattern, reguexStr)
                 dnis=re.findall(pattern,self.fullText)
                 if dnis!=[]:
                     for d in dnis:
@@ -77,17 +78,6 @@ class dataWord:
             "carnets":carnets
         }
         return self.dataWord
-    # def get_dataFromPages(self):
-    #     data=self.dataWord
-    #     scrp=scrapingPages
-    #     scrp.start_elDni()
-    #     scrp.start_Sunarp()
-    #     scrp.start_sunat()
-    #     for dni in data['dnis']:
-    #         dniName=scrp.get_dniName(dni)
-
-
-
 
 def sub_main():
     #get all .docx files in Kardexs folder
@@ -102,7 +92,19 @@ def sub_main():
         #print(file)
         # llamar a mi funcion de busqueda de nombres naturales o juridicos
         listDataWord.append(dWord.getdataword())
-        print(dWord.getdataword()['partidaE'])
-    #print(listDataWord)
+        #print(dWord.getdataword())
+    dataofWords={}
 
+    for kardexData in listDataWord:
+        #print(f"-------reading karex: {kardexData['kardex']}")
+        dataofWords[kardexData['kardex']]={}
+        for dni in kardexData['dnis']:
+            dataofWords[kardexData['kardex']]['DNI']=dni
+        for ruc in kardexData['rucs']:
+            dataofWords[kardexData['kardex']]['RUC']=ruc
+        for partid in kardexData['partidaE']:
+            dataofWords[kardexData['kardex']]['partidE']=partid
+    with open('dataofWords.json', 'w') as f:
+        json.dump(dataofWords, f,indent=4)
+    #print(listDataWord)
 sub_main()
