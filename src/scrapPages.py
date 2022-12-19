@@ -15,7 +15,7 @@ class scrapingPages:
         self.pageSunat=None
         self.pageSunarp=None
         self.pageDni=None
-    def scrapInpages(self):
+    def gettingPagesData(self):
         with sync_playwright() as p:
             self.browser = p.chromium.launch(headless=False)
             self.context = self.browser.new_context()
@@ -30,19 +30,44 @@ class scrapingPages:
                 # llamar a mi funcion de busqueda de nombres naturales o juridicos
                 listDataWord.append(dWord.getdataword())
             dataToConfront={}
-
             for kardexData in listDataWord:
                 print(f"-------reading karex: {kardexData['kardex']}")
                 dataToConfront[kardexData['kardex']]={}
+                dniNames=[]
+                dniName=None
                 for dni in kardexData['dnis']:
                     dniName=self.get_dniName(dni)
+                    dictNames={
+                        "NRO DNI":dni,
+                        "DNI ENCONTRADO":dniName,
+                    }
+                    dniNames.append(dictNames)
+                if dniName!=None:
                     dataToConfront[kardexData['kardex']]['DNI']=dniName
+
+                rucsNames=[]
+                rucName=None
                 for ruc in kardexData['rucs']:
                     rucName=self.get_rucSunat(ruc)
-                    dataToConfront[kardexData['kardex']]['RUC']=rucName
+                    dictRcus={
+                        "NRO DE RUC":ruc,
+                        "RUC ENCONTRADA":rucName,
+                    }
+                    rucsNames.append(dictRcus)
+                if rucName!=None:
+                    dataToConfront[kardexData['kardex']]['RUC']=rucsNames
+
+                partids=[]
+                partidName=None
                 for partid in kardexData['partidaE']:
                     partidName=self.get_sunarpp(partid)
-                    dataToConfront[kardexData['kardex']]['partidE']=partidName
+                    dicpartid={
+                        "NRO PARTIDA":partid,
+                        "PARTIDA ENCONTRADA":partidName
+                    }
+                    partids.append(dicpartid)
+                if partidName!=None:
+                    dataToConfront[kardexData['kardex']]['partidE']=partids
             with open('dataofPages.json', 'w') as f:
                 json.dump(dataToConfront, f,indent=4)
                     
@@ -89,18 +114,23 @@ class scrapingPages:
         direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
         frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
         print(direc)
+        return frame2
+        
     def start_elDni(self):
         self.pageDni = self.context.new_page()
         self.pageDni.goto(self.elDni)
         
     def get_dniName(self,dni):
-        self.pageDni.query_selector("input#dni").fill("")
-        self.pageDni.query_selector("input#dni").fill(dni)
-        self.pageDni.query_selector("button[form='buscar-por-dni']").click()
-        self.pageDni.wait_for_load_state()
-        nombreCompleto=self.pageDni.query_selector("input#completos").get_attribute("value")
+        try:
+            self.pageDni.query_selector("input#dni").fill("")
+            self.pageDni.query_selector("input#dni").fill(dni)
+            self.pageDni.query_selector("button[form='buscar-por-dni']").click()
+            self.pageDni.wait_for_load_state()
+            nombreCompleto=self.pageDni.query_selector("input#completos").get_attribute("value")
+        except:
+            nombreCompleto="dni not found"
         return nombreCompleto
         #self.pageDni.pause()
         
-scrpy=scrapingPages()
-scrpy.scrapInpages()
+# scrpy=scrapingPages()
+# scrpy.scrapInpages()

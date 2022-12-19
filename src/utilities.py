@@ -4,9 +4,8 @@ import os
 #import PATH from os
 from pathlib import Path
 class pathsManager:
-    def __init__(self) -> None:
-        self.currentPath=os.getcwd()
-        
+    def __init__(self):
+        self.currentFolderPath=Path(os.getcwd())
         
 class configData:
     def __init__(self,configPath) -> None:

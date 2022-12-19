@@ -1,7 +1,8 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import os
-def start_legacy():
+from utilities import pathsManager
+def download_legacy():
     user="BOT"
     password="BOT"
     url="http://192.168.0.90"
@@ -20,8 +21,11 @@ def start_legacy():
         page.goto(url2)
         page.wait_for_selector("input[name='criterio']")
         kardexs=get_list_kardexs()
-        for kardex in kardexs:    
-            get_kardex(kardex)
+        for kardex in kardexs:
+            try:
+                get_kardex(kardex)
+            except:
+                pass
         browser.close()
 def get_kardex(kardex):
     print(f"kardex: {kardex} descargando....")
@@ -44,11 +48,11 @@ def get_kardex(kardex):
     download.save_as(nameFile)
 
     #driver.get('http://192.168.0.90/legasys/www/legal/consultas/consugeneral.php?mod=2')
-    #page.pause() 
-    
+    #page.pause()     
+
 def get_list_kardexs():
-    df=pd.read_excel("Documentación\CUADRO DIGITACION_CONFRONTACION.xlsx")
+    fp=pathsManager().currentFolderPath
+    path=os.path.join(fp,"CDCONF.xlsx")
+    df=pd.read_excel(path)
     return df["k"].values.tolist()
-    
-start_legacy()
-#get_kardexs()
+#don_legacy()

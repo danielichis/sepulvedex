@@ -10,8 +10,8 @@ class dataWord:
     def __init__(self,path) -> None:
         pm=pathsManager()
         self.kardexName=path
-        self.kardexsPath=os.path.join(pm.currentPath,"Kardexs",path)
-        self.configPath=os.path.join(pm.currentPath,"config.xlsx")
+        self.kardexsPath=os.path.join(pm.currentFolderPath,"Kardexs",path)
+        self.configPath=os.path.join(pm.currentFolderPath,"config.xlsx")
         self.doc=docx.Document(self.kardexsPath)
         self.fullText=self.getText()
         self.configData=configData(self.configPath)
@@ -79,10 +79,10 @@ class dataWord:
         }
         return self.dataWord
 
-def sub_main():
+def GettingkardexData():
     #get all .docx files in Kardexs folder
     pm=pathsManager()
-    pathy=os.path.join(pm.currentPath,"Kardexs")
+    pathy=os.path.join(pm.currentFolderPath,"Kardexs")
     #print(pathy)
     files=[f for f in os.listdir(pathy) if f.endswith('.docx')]
     #print(files)
@@ -98,13 +98,19 @@ def sub_main():
     for kardexData in listDataWord:
         #print(f"-------reading karex: {kardexData['kardex']}")
         dataofWords[kardexData['kardex']]={}
+        dnilist=[]
         for dni in kardexData['dnis']:
-            dataofWords[kardexData['kardex']]['DNI']=dni
+            dnilist.append(dni)
+        dataofWords[kardexData['kardex']]['DNI']=dnilist
+        ruclist=[]
         for ruc in kardexData['rucs']:
-            dataofWords[kardexData['kardex']]['RUC']=ruc
+            ruclist.append(ruc)
+        dataofWords[kardexData['kardex']]['RUC']=ruclist
+        partidList=[]
         for partid in kardexData['partidaE']:
-            dataofWords[kardexData['kardex']]['partidE']=partid
+            partidList.append(partid)
+        dataofWords[kardexData['kardex']]['partidE']=partidList
     with open('dataofWords.json', 'w') as f:
         json.dump(dataofWords, f,indent=4)
     #print(listDataWord)
-sub_main()
+#sub_main()
