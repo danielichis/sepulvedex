@@ -1,4 +1,7 @@
 from playwright.sync_api import sync_playwright
+from scrapDocxs import dataWord
+import json
+import os
 rucNotFound=True
 class scrapingPages:
     def __init__(self):
@@ -20,19 +23,38 @@ class scrapingPages:
             self.start_sunat()
             self.start_Sunarp()
             self.start_elDni()
-            # Open new page
-            self.get_rucSunat()
-            self.get_sunarpp()
-            self.get_dniName()
+            files=[file for file in os.listdir("Kardexs") if file.endswith('.docx')]
+            listDataWord=[]
+            for file in files:
+                dWord=dataWord(file)
+                # llamar a mi funcion de busqueda de nombres naturales o juridicos
+                listDataWord.append(dWord.getdataword())
+            dataToConfront={}
+
+            for kardexData in listDataWord:
+                print(f"-------reading karex: {kardexData['kardex']}")
+                dataToConfront[kardexData['kardex']]={}
+                for dni in kardexData['dnis']:
+                    dniName=self.get_dniName(dni)
+                    dataToConfront[kardexData['kardex']]['DNI']=dniName
+                for ruc in kardexData['rucs']:
+                    rucName=self.get_rucSunat(ruc)
+                    dataToConfront[kardexData['kardex']]['RUC']=rucName
+                for partid in kardexData['partidaE']:
+                    partidName=self.get_sunarpp(partid)
+                    dataToConfront[kardexData['kardex']]['DNI']=partidName
+            with open('dataofWords.json', 'w') as f:
+                json.dump(dataToConfront, f,indent=4)
+                    
     def start_sunat(self):
         self.pageSunat = self.context.new_page()
         self.pageSunat.goto(self.urlSunat)
-    def get_rucSunat(self):
+    def get_rucSunat(self,ruc):
         rucNotFound=True
         while rucNotFound:
             try:
                 self.pageSunat.query_selector("input#txtRuc").fill("")
-                self.pageSunat.query_selector("input#txtRuc").fill("20256149681")
+                self.pageSunat.query_selector("input#txtRuc").fill(ruc)
                 self.pageSunat.query_selector("button#btnAceptar").click()
                 self.pageSunat.wait_for_timeout(1000)
                 self.pageSunat.wait_for_selector("div.col-sm-7 h4",timeout=2000)
@@ -41,7 +63,9 @@ class scrapingPages:
                 self.pageSunat.query_selector("button[class='btn btn-danger btnNuevaConsulta']").click()
                 rucNotFound=False
             except:
+                rucName="Ruc not found"
                 print("Ruc not found")
+            return rucName
     def start_Sunarp(self):
         self.pageSunarp = self.context.new_page()
         self.pageSunarp.goto(self.urlSunarp)
@@ -54,11 +78,11 @@ class scrapingPages:
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
-    def get_sunarpp(self):
+    def get_sunarpp(self,partida):
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill("00128244")
+        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
         self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
         frame2=self.pageSunarp.frame(name="main_frame1")
         frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
@@ -69,14 +93,14 @@ class scrapingPages:
         self.pageDni = self.context.new_page()
         self.pageDni.goto(self.elDni)
         
-    def get_dniName(self):
+    def get_dniName(self,dni):
         self.pageDni.query_selector("input#dni").fill("")
-        self.pageDni.query_selector("input#dni").fill("48023851")
+        self.pageDni.query_selector("input#dni").fill(dni)
         self.pageDni.query_selector("button[form='buscar-por-dni']").click()
         self.pageDni.wait_for_load_state()
         nombreCompleto=self.pageDni.query_selector("input#completos").get_attribute("value")
-        print(nombreCompleto)
-        self.pageDni.pause()
+        return nombreCompleto
+        #self.pageDni.pause()
         
 scrpy=scrapingPages()
 scrpy.scrapInpages()

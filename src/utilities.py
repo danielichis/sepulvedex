@@ -6,6 +6,8 @@ from pathlib import Path
 class pathsManager:
     def __init__(self) -> None:
         self.currentPath=os.getcwd()
+        
+        
 class configData:
     def __init__(self,configPath) -> None:
         self.wordPath=configPath
@@ -43,4 +45,6 @@ class configData:
         while column_number:
             column_number, remainder = divmod(column_number - 1, 26)
             letters.append(chr(65 + remainder))
-        return ''.join(reversed(letters))        
+        return ''.join(reversed(letters))
+
+
