@@ -23,19 +23,17 @@ class scrapingPages:
             self.start_sunat()
             self.start_Sunarp()
             self.start_elDni()
-            files=[file for file in os.listdir("Kardexs") if file.endswith('.docx')]
-            listDataWord=[]
-            for file in files:
-                dWord=dataWord(file)
-                # llamar a mi funcion de busqueda de nombres naturales o juridicos
-                listDataWord.append(dWord.getdataword())
+            with open('dataofWords.json') as f:
+            #kardexs = list(json.load(f).keys())
+                listDataWord = json.load(f)
             dataToConfront={}
-            for kardexData in listDataWord:
-                print(f"-------reading karex: {kardexData['kardex']}")
-                dataToConfront[kardexData['kardex']]={}
+            ks = list(listDataWord.keys())
+            for i,kardexData in enumerate(list(listDataWord.values())):
+                print(f"-------reading karex: {ks[i]}")
+                dataToConfront[ks[i]]={}
                 dniNames=[]
                 dniName=None
-                for dni in kardexData['dnis']:
+                for dni in kardexData['DNI']:
                     dniName=self.get_dniName(dni)
                     dictNames={
                         "NRO DNI":dni,
@@ -43,31 +41,31 @@ class scrapingPages:
                     }
                     dniNames.append(dictNames)
                 if dniName!=None:
-                    dataToConfront[kardexData['kardex']]['DNI']=dniName
+                    dataToConfront[ks[i]]['DNI']=dniNames
 
                 rucsNames=[]
                 rucName=None
-                for ruc in kardexData['rucs']:
+                for ruc in kardexData['RUC']:
                     rucName=self.get_rucSunat(ruc)
                     dictRcus={
-                        "NRO DE RUC":ruc,
-                        "RUC ENCONTRADA":rucName,
+                        "NRO RUC":ruc,
+                        "RUC ENCONTRADO":rucName,
                     }
                     rucsNames.append(dictRcus)
                 if rucName!=None:
-                    dataToConfront[kardexData['kardex']]['RUC']=rucsNames
+                    dataToConfront[ks[i]]['RUC']=rucsNames
 
                 partids=[]
                 partidName=None
-                for partid in kardexData['partidaE']:
+                for partid in kardexData['partidE']:
                     partidName=self.get_sunarpp(partid)
                     dicpartid={
                         "NRO PARTIDA":partid,
-                        "PARTIDA ENCONTRADA":partidName
+                        "PARTIDA ENCONTRADO":partidName
                     }
                     partids.append(dicpartid)
                 if partidName!=None:
-                    dataToConfront[kardexData['kardex']]['partidE']=partids
+                    dataToConfront[ks[i]]['PARTIDA']=partids
             with open('dataofPages.json', 'w') as f:
                 json.dump(dataToConfront, f,indent=4)
                     
@@ -84,12 +82,11 @@ class scrapingPages:
                 self.pageSunat.wait_for_timeout(1000)
                 self.pageSunat.wait_for_selector("div.col-sm-7 h4",timeout=2000)
                 rucName=self.pageSunat.query_selector("div.col-sm-7 h4").inner_text()
-                print(rucName)
                 self.pageSunat.query_selector("button[class='btn btn-danger btnNuevaConsulta']").click()
                 rucNotFound=False
             except:
                 rucName="Ruc not found"
-                print("Ruc not found")
+            print(rucName)
             return rucName
     def start_Sunarp(self):
         self.pageSunarp = self.context.new_page()
@@ -98,23 +95,29 @@ class scrapingPages:
         self.pageSunarp.query_selector("input[name='password']").fill(self.passSunarp)
         self.pageSunarp.query_selector("td.Ingresar").click()
         self.pageSunarp.wait_for_timeout(1000)
-        frame=self.pageSunarp.frame(name='left_frame')
-        frame.locator("//a[contains(text(),'Solicitar certificado literal de partida(copia literal)')]").click()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
+
     def get_sunarpp(self,partida):
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
-        self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
         frame2=self.pageSunarp.frame(name="main_frame1")
-        frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
-        direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
-        frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
+        try:
+            self.pageSunarp.wait_for_timeout(1000)
+            frame=self.pageSunarp.frame(name='left_frame')
+            frame.locator("//a[contains(text(),'Solicitar certificado literal de partida(copia literal)')]").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboAreaRegistral\"]").select_option("22000")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmSolCertMenu\\:cboCertificado\"]").select_option("70:1:L:Certificado Literal de Partida PJ:Propiedad Inmueble Predial")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Solicitar\")").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("select[name=\"frmPartidaDirecta\\:cmbOficina\"]").select_option("01|01")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill("")
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
+            frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)",timeout=2000)
+            direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
+            frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
+        except:
+            direc="not found"
         print(direc)
-        return frame2
+        return direc
         
     def start_elDni(self):
         self.pageDni = self.context.new_page()
@@ -128,7 +131,7 @@ class scrapingPages:
             self.pageDni.wait_for_load_state()
             nombreCompleto=self.pageDni.query_selector("input#completos").get_attribute("value")
         except:
-            nombreCompleto="dni not found"
+            nombreCompleto="not found"
         return nombreCompleto
         #self.pageDni.pause()
         

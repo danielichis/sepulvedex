@@ -4,7 +4,7 @@ from scrapPages import scrapingPages
 
 def main():
     #download_legacy()
-    GettingkardexData()
+    #GettingkardexData()
     scrpy=scrapingPages()
     scrpy.gettingPagesData()
 main()

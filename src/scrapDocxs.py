@@ -94,9 +94,11 @@ def GettingkardexData():
         listDataWord.append(dWord.getdataword())
         #print(dWord.getdataword())
     dataofWords={}
+#    dataofWords['kardexs']={}
 
     for kardexData in listDataWord:
         #print(f"-------reading karex: {kardexData['kardex']}")
+        print(kardexData)
         dataofWords[kardexData['kardex']]={}
         dnilist=[]
         for dni in kardexData['dnis']:
@@ -113,4 +115,4 @@ def GettingkardexData():
     with open('dataofWords.json', 'w') as f:
         json.dump(dataofWords, f,indent=4)
     #print(listDataWord)
-#sub_main()
+#GettingkardexData()
