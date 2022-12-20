@@ -1,11 +1,20 @@
 import openpyxl
 import pandas as pd
 import os
+import sys
 #import PATH from os
 from pathlib import Path
 class pathsManager:
     def __init__(self):
         self.currentFolderPath=Path(os.getcwd())
+        self.application_path2=self.get_application_path()
+    def get_application_path(self):
+    # determine if application is a script file or frozen exe
+        if getattr(sys, 'frozen', False):
+            self.application_path2 = os.path.dirname(sys.executable)
+        elif __file__:
+            self.application_path2 = os.path.dirname(__file__)
+        self.application_path2 = Path(self.application_path2)
         
 class configData:
     def __init__(self,configPath) -> None:
