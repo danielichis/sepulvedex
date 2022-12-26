@@ -54,5 +54,7 @@ def get_list_kardexs():
     fp=pathsManager().currentFolderPath
     path=os.path.join(fp,"CDCONF.xlsx")
     df=pd.read_excel(path)
-    return df["k"].values.tolist()
+    return df[["k"]].values.tolist()
 #don_legacy()
+
+#print(get_list_kardexs())
