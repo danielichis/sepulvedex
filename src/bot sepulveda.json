@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bot-sepulveda",
+  "private_key_id": "2a90b3dcfd4e66f648f73c00f5dc100de3ba631b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCsIC7prKxzRwSz\nDDgrHTju+uy1GJ9w4ielgWruBtruFlURNxyGLSgNFy3uMXVUI/SO8MREqd90wez1\n+DD2X2hoPNoo17+WqbWGMFZF9e1yP5qH4zOZ+RP0TUtwzkwIkkBY+ny/oMGVPGr8\n8kHCKju3GAi73tla6YH/7xAgySyfoAhy16Zc5ffjkyvjFIxPllweQMfU4wre15Ng\nfYqbXqgtxROylItZjxfDaqlqdsacrKDLc9knyoLHNNhXDRbmV2zErN4EGmVZQ9Tu\nQ0wdBWP+r7Z2Uil+dMQ/qF5sLNEgrEx6lNdTlOC5FdHMpoG4WUO84gPEfSeVvKw2\nt5bI4FOnAgMBAAECgf8m5eQOnhFeyoxXf5At7YLkkkiT/7EBOkFYGF/hApT5Q6jw\n6qqg/Lb/A2Ht/0HAwnRe7WZJBrW8ZZp6JA0zprwb9rpXVPB779pB71GwLdFfX/nY\ndXAoKtSxosyUFvavpgMHbxR9ZJ+Q5iScRCmOfcn3PjFa/VEcjTugZufMsWyIIX+N\njst4KlC0Oeqqqi9cJ6or4SDf6ZbSOvX0zCNn0c+aX3MebBYuJ3QwNL1BHygFtFXS\nOe7rUXwrMEqhCQ8aM1OVuUOqkBoveYTHBglI3wvTls1DUFRXNF0NkVo4HK+Y0KkF\n6RjKv1XLHb8dFd23YuzSnn/4ka3x8MSxIrRu/XECgYEA2EnqJ0qaQATfKjNOKosR\nhw8doaXkoFmXo+/VofE/v+nBKRTckTQEG59vRhSuEt3FPOdk+GVdUn37hkmLOJJZ\nfLi+t+hxXMvXbTqpf0vuvhMuQoh6IPLjK71FT6oNhpqtXt/OgiuE5d3TYhk8Z1UT\nSxcaI/jnXUjw4veNflmPS5cCgYEAy7qAdbB80MkibNzZ0e/SphEpVRXHD8Ipreo0\nn1OWUwDVjlJLBMpaBglqZVpZe0QNmR8cfhiMuEaT81FKRLxRRfiyMxTPay7jT738\n3hEr2nrC0CXIRtLaaN2QU4U8qzappxE5ZVwtJmUuCjxB+/R+mt/Jbw/ac5u0mu5j\n+rl2enECgYEAm9P9GJveMDuSUUQvj+UsFqNkVN9Brel+oEUeJJO8u1b9rMxz8UWJ\npCElOVeS5tLS1QNdsrzNFK7htals3bBLOtmbxsJ4UkQmjHLURXt+oYEONi8/1ldI\nJm4x7qh1IEJ2oEEc9pnGIRrFvgqygzw/Lz2QvtQIVSRFMTDrx1ldLTcCgYEAyVwZ\nsbjxdM8Htn+Gzufx1O+rYYx3xoyK83lD76IHNxzg9p1BxodV+Rd/UJO/U4VMx2Yn\nnD4Zf91KSDi1ZkCXN8h6IODVrcOXKm7GqppgNL4XJPHjBJVNCE7NYq+S6krJ3fW5\nPASiH4vruHQcZ7IdHGhJyPrrWE6ycFtk+CAtCRECgYEAowcWIALbFRO/cdrjH947\nedeNBci5m3F9azgKOgqRDer9DTlBuFVCIjCQNi+5UejwPTv8NqEP/fPBLUu2b5J+\niHGbKU9KMOEUcSFuZSRwVs3K9HEju+jCJLWcY01qQ2jaJ5Panq2TpMyM4V/z+jl0\nVaVrMNsxbd4if8CWpOyHXY0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "botsepulveda@bot-sepulveda.iam.gserviceaccount.com",
+  "client_id": "106389950765123000116",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/botsepulveda%40bot-sepulveda.iam.gserviceaccount.com"
+}

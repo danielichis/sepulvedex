@@ -17,7 +17,6 @@ def getCardinal(N):
         if(N>=10):
             return Decena[d]+" "+Unidad[u]
         else:
-            return Unidad[N]
+            return Unidad[N].upper()
 
-print(getCardinal(11).upper())
 

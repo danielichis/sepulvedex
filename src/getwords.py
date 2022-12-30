@@ -10,7 +10,7 @@ def download_legacy():
 
     with sync_playwright() as p:
         global context,page,browser
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context=browser.new_context()
         page = context.new_page()
         page.goto(url)
@@ -24,7 +24,9 @@ def download_legacy():
         for kardex in kardexs:
             try:
                 get_kardex(kardex)
-            except:
+            except Exception as e:
+                print(e)
+                print(f"descarga fallida {kardex}")
                 pass
         browser.close()
 def get_kardex(kardex):
@@ -36,17 +38,28 @@ def get_kardex(kardex):
     with context.expect_page() as window:
         page.locator("//a[contains(text(),'Generar')]/img").click()
     page2 = window.value
+    page2.wait_for_load_state()
     page2.locator("//a[contains(text(),'ESCRITURA')]").click()
     with page2.expect_download() as download_info:
-        page2.wait_for_selector("div#ver_ver>a>img")
-        page2.query_selector("div#ver_ver>a>img").click()
+        try:
+            page2.wait_for_selector("img[src='/legasys/www/assets/images/genera_escritura.png']",timeout=1000)
+            page2.query_selector("img[src='/legasys/www/assets/images/genera_escritura.png']").click()
+            print("....")
+        except Exception as e :
+            print("....")
+            page2.wait_for_selector("img[alt='Visualizar Documento']",timeout=1000)
+            page2.query_selector("img[alt='Visualizar Documento']").click()
+            #print(e)
+        print("....")
+
+
     #new_window = window.value
     download = download_info.value
     page2.close()
     nameFile=kardex+".docx"
     nameFile=os.path.join("Kardexs",nameFile)
     download.save_as(nameFile)
-
+    print("descargado")
     #driver.get('http://192.168.0.90/legasys/www/legal/consultas/consugeneral.php?mod=2')
     #page.pause()     
 
@@ -54,7 +67,5 @@ def get_list_kardexs():
     fp=pathsManager().currentFolderPath
     path=os.path.join(fp,"CDCONF.xlsx")
     df=pd.read_excel(path)
-    return df[["k"]].values.tolist()
-#don_legacy()
-
-#print(get_list_kardexs())
+    return df["k"].values.tolist()
+download_legacy()

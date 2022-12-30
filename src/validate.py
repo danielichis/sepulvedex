@@ -4,12 +4,12 @@ from utilities import pathsManager
 from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
 from numerToLetters import numero_a_moneda_sunat
+from validateMore import validate_more
 import re
 import os
 import json
 #Instalarte ademas este modulo para los comments
 #pip install bayoo-docx
-
 def split_text(text, word):
     pattern = re.compile(r'([\S\s]*)(\b{})([\S\s]*)'.format(word))
     match = pattern.search(text)
@@ -17,30 +17,31 @@ def split_text(text, word):
         return match.groups()
     return None
 
+
 def split_Runs(doc,word):
     for p in doc.paragraphs:
-        if p.text.find(word) != -1:
+        if p.text.find(word) != -1:            
             virtualRuns=p.runs
             p.text = ""
+            #x=[st for st in doc.styles if st.style_id == '']
             for r in virtualRuns:
+                try:
+                    font_styles = doc.styles
+                    font_charstyle = font_styles.add_style('CommentsStyle', WD_STYLE_TYPE.CHARACTER)
+                    font_object = font_charstyle.font
+                    font_object.size =r.font.size
+                    font_object.name = r.font.name
+                except:
+                    pass
                 if r.text.find(word) != -1:
                     before, word, after = split_text(r.text, word)
                     #clone the format of the original run
-                    p.add_run(before,style='CommentsStyle')
-                    # runBefore.font.name = fontName
-                    # runBefore.font.size = fontSize
-                    #p.add_run(before)
-                    commentRun=p.add_run("",style='CommentsStyle')
-                    # commentRun.font.name = fontName
-                    # commentRun.font.size = fontSize
-                    wordRun=p.add_run(word,style='CommentsStyle')
-                    # wordRun.font.name = fontName
-                    # wordRun.font.size = fontSize
-                    affterRun=p.add_run(after,style='CommentsStyle')
-                    # affterRun.font.name = fontName
-                    # affterRun.font.size = fontSize
+                    p.add_run(before,style="CommentsStyle")
+                    p.add_run("",style="CommentsStyle")
+                    p.add_run(word,style="CommentsStyle")
+                    p.add_run(after,style="CommentsStyle")
                 else:
-                    p.add_run(r.text,style='CommentsStyle')
+                    p.add_run(r.text,style="CommentsStyle")
     return doc
 def style_Token(doc,word,comment):
     for p in doc.paragraphs:
@@ -54,7 +55,7 @@ def style_Token(doc,word,comment):
 
 def confront(pathkard,doc, numero,descripction,splitMode):
     alltext=getText(doc)
-    print(f"reading {numero} {descripction}")
+    #print(f"reading {numero} {descripction}")
     if splitMode:
         doc=split_Runs(doc,numero)
     else:
@@ -95,22 +96,13 @@ def readJsonPages():
     with open(jsonPath) as json_file:
         data = json.load(json_file)    
     for key in data:
-        print(f"reading ------------{key}----------")
+        #print(f"reading ------------{key}----------")
         pathkard=os.path.join(pm.currentFolderPath,"Kardexs",key)
         pathkardOut=os.path.join(pm.currentFolderPath,"KardexsOut",key)
-        if key=="K42218.docx":
-            #print(pathkard)
-            doc=Document(pathkard)
-            font_styles = doc.styles
-            paragraphs_styles=[s for s in font_styles if s.type == WD_STYLE_TYPE.PARAGRAPH]
-            paragraphs_styles_names=[styles.type for styles in paragraphs_styles]
-            font_charstyle = font_styles.add_style('CommentsStyle', WD_STYLE_TYPE.CHARACTER)
-            help(font_styles.add_style)
-            font_object = font_charstyle.font
-            font_object.size = Pt(10)
-            font_object.name = 'Arial Narrow'
-            value = data[key]
-            validateAllData(value,doc,pathkardOut,True)
-            validateAllData(value,doc,pathkardOut,False)
+        doc=Document(pathkard)
+        value = data[key]
+        validateAllData(value,doc,pathkardOut,True)
+        validateAllData(value,doc,pathkardOut,False)
+        validate_more(getText(doc),doc)
 
 readJsonPages()
