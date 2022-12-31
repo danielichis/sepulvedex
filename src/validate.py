@@ -4,7 +4,6 @@ from utilities import pathsManager
 from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
 from numerToLetters import numero_a_moneda_sunat
-from validateMore import validate_more
 import re
 import os
 import json
@@ -89,6 +88,21 @@ def validateAllData(value,doc,pathkard,splitMode):
         for dict3 in value2:
             values=list(dict3.values())
             confront(pathkard,doc, values[0],values[1],splitMode)
+def validate_amounts(alltext,doc,pathkardOut):
+    # Getting more info
+    monts=re.findall(r"([0-9,´]*\.\d{2}) \(([\w\s]* [Y-y]? ?00/100)",alltext)
+    for mont in monts:
+        y=mont[1].replace("CON","Y")
+        numero=mont[0].replace(",","").replace("´","")
+        x=numero_a_moneda_sunat(float(numero)).replace(" SOLES","")
+        x=x.replace("CON","Y")
+        if x!=y:
+            print(f"ERROR {mont[0]} {mont[1]} {x}")
+            doc=split_Runs(doc, mont[0])
+            doc=style_Token(doc, mont[0],True)
+            doc.save(pathkardOut)
+        else:
+            print(f"OK {mont[0]} {mont[1]} {x}")
 
 def readJsonPages():
     pm=pathsManager()
@@ -96,13 +110,16 @@ def readJsonPages():
     with open(jsonPath) as json_file:
         data = json.load(json_file)    
     for key in data:
-        #print(f"reading ------------{key}----------")
+        print(f"reading ------------{key}----------")
         pathkard=os.path.join(pm.currentFolderPath,"Kardexs",key)
         pathkardOut=os.path.join(pm.currentFolderPath,"KardexsOut",key)
         doc=Document(pathkard)
+        doc.save(pathkardOut)
         value = data[key]
         validateAllData(value,doc,pathkardOut,True)
         validateAllData(value,doc,pathkardOut,False)
-        validate_more(getText(doc),doc)
+        doc=Document(pathkardOut)
+        validate_amounts(getText(doc),doc,pathkardOut)
+        
 
 readJsonPages()

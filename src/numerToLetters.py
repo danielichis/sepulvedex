@@ -51,7 +51,7 @@ CIENTOS = (
     'CIENTO',
     'DOSCIENTOS',
     'TRESCIENTOS',
-    'CUATROSCIENTOS',
+    'CUATROCIENTOS',
     'QUINIENTOS',
     'SEISCIENTOS',
     'SETECIENTOS',
@@ -111,6 +111,8 @@ def leer_decenas(numero):
     decena, unidad = divmod(numero, 10)
     if numero <= 19:
         resultado = DECENAS[unidad]
+    elif numero == 20:
+        resultado = f"VEINTE"
     elif numero <= 29:
         resultado = f"VEINTI{UNIDADES[unidad]}"
     else:
