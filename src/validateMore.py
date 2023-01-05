@@ -2,7 +2,7 @@ import docx
 import re
 from numerToLetters import numero_a_moneda_sunat
 import os
-
+from utilities import configData,pathsManager
 def correlativos_correctos(correlativos):
   grupo_actual = correlativos[0]
   for i in range(len(correlativos) - 1):
@@ -14,7 +14,14 @@ def correlativos_correctos(correlativos):
       else:
         return False
   return True
-def getalltext(doc):
+
+def getText(doc):
+    fullText=[]
+    for para in doc.paragraphs:
+        fullText.append(para.text)
+    return " ".join(fullText)
+
+def getAll_correlatives(doc):
     fullText=[]
     corr=[]
     for j,para in enumerate(doc.paragraphs):
@@ -31,7 +38,7 @@ def getalltext(doc):
         corr.extend(correlativ3)
         # corr.extend(correlativ4)
     # conver the corr list to int
-    print(corr)
+    #print(corr)
     # corr = [int(i) for i in corr]
     # if len(corr) > 0:
     #     if correlativos_correctos(corr):
@@ -41,23 +48,48 @@ def getalltext(doc):
 
 #list of .docx files in Kardex folder
 
-def correlativeLetters():
-    numLeters=["PRIMER","SEGUND","TERCER","CUART","QUINT","SEXT","SÉPTIM","OCTAV","NOVEN","DÉCIM"]
+def correlativeLetters(doc):
+    pm=pathsManager()
+    cnfd=configData(os.path.join(pm.currentFolderPath,"config.xlsx"))
+    numLeters=cnfd.get_data_config()
+    numLeters=numLeters["CORRELATIVOS LETRAS"].values.tolist()
+    #numLeters=["PRIMER","SEGUND","TERCER","CUART","QUINT","SEXT","SÉPTIM","OCTAV","NOVEN","DÉCIM"]
     pattern=""
-    print(len(numLeters))
     for i,leter in enumerate(numLeters):
         for j,c in enumerate(leter):
             if j==0:
-                pattern0=r"%s *" % c
+                pattern0=r"^(%s *" % c
             else:
                 pattern0=pattern0+r"%s *" % c
         if i==0:
-            pattern=r"%s[AO]" % leter
+            pattern=pattern0+r"[AO])"
         else:
-            pattern=pattern+r"|%s[AO]" % leter
+            pattern=pattern+r"|%s[AO])" % pattern0
+    setNumsList=[]
+    for p in doc.paragraphs:
+        setNums=re.findall(pattern,p.text)
+        setNumsList.extend(setNums)
 
-    print(pattern)
-correlativeLetters()
+    netCorrelatives=[]
+    for nums in setNumsList:
+        for num in nums:
+            if num:
+                netCorrelatives.append(num)
+    return netCorrelatives
+def getIndexCorrelative(listOfCorrelatives):
+    for i,cor in enumerate(listOfCorrelatives):
+        if cor.replace(" ","").find("PRIMER") != -1:
+            return i
+def subMain():
+    listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
+    for file in listOfDocxFiles:
+        print(file)
+        doc=docx.Document(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs\\"+file)
+        text=getText(doc)
+        #getAll_correlatives(doc)
+        correlativeLetters(doc)
+    
+subMain()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:
