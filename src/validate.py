@@ -42,7 +42,7 @@ def split_Runs(doc,word):
                 else:
                     p.add_run(r.text,style="CommentsStyle")
     return doc
-def style_Token(doc,word,comment):
+def style_Token(doc,word,comment,specialP=False):
     for p in doc.paragraphs:
         for i,r in enumerate(p.runs):
             if p.runs[i].text.find(word) != -1:
@@ -51,7 +51,15 @@ def style_Token(doc,word,comment):
                     p.runs[i-1].add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
                     #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
-
+def style_Token2(doc,word,comment):
+    p=doc.paragraphs[word["index"]]    
+    for i,r in enumerate(p.runs):
+        if p.runs[i].text.find(word["index"]) != -1:
+            p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
+            if comment:
+                p.runs[i].add_comment(f'CORRELATIVO INCORRECTO',author='BOT CONFRONT')
+                #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+    return doc
 def confront(pathkard,doc, numero,descripction,splitMode):
     alltext=getText(doc)
     #print(f"reading {numero} {descripction}")
@@ -120,6 +128,4 @@ def readJsonPages():
         validateAllData(value,doc,pathkardOut,False)
         doc=Document(pathkardOut)
         validate_amounts(getText(doc),doc,pathkardOut)
-        
-
 readJsonPages()

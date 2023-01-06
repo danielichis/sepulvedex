@@ -23,10 +23,8 @@ def get_data_from_gsheet():
         listToDownload=[]
         if kardex[1] == 'NO':
             listToDownload.append(kardex[0])
-            print(kardex[0])
+            print(kardex[1])
     return listToDownload
-
-
 # while True:
 #     print('getting data from google sheet...')
 #     get_data_from_gsheet()

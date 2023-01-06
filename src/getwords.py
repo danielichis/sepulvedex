@@ -1,6 +1,7 @@
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import os
+from googleSheet import get_data_from_gsheet
 from utilities import pathsManager
 def download_legacy():
     user="BOT"
@@ -67,5 +68,7 @@ def get_list_kardexs():
     fp=pathsManager().currentFolderPath
     path=os.path.join(fp,"CDCONF.xlsx")
     df=pd.read_excel(path)
-    return df["k"].values.tolist()
-download_legacy()
+
+    return get_data_from_gsheet()
+#download_legacy()
+print(get_list_kardexs())
