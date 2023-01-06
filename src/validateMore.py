@@ -138,23 +138,26 @@ def subMain():
     for file in listOfDocxFiles:
         print(file)
         doc=docx.Document(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs\\"+file)
-        #validateLetters(doc,numLeters)
-        ordinalsTovalidate=ordinals_numbers(doc)
-        listIndexError=[]
-        for level in ordinalsTovalidate:
-            indexsError=True
-            if len(level)>0:
-                indexsError=ValiteConsecutiveNums(level)
-            if indexsError==True:
-                pass
-            else:
-                listIndexError.append(indexsError)
-                print(indexsError)
-        if len(listIndexError)>0:
-            print("CORRELATIVOS INCORRECTOS")
-            print(listIndexError)
-        else:
-            print("CORRELATIVOS CORRECTOS")
+        try:
+            validateLetters(doc,numLeters)
+        except:
+            print("ERROR")
+        # ordinalsTovalidate=ordinals_numbers(doc)
+        # listIndexError=[]
+        # for level in ordinalsTovalidate:
+        #     indexsError=True
+        #     if len(level)>0:
+        #         indexsError=ValiteConsecutiveNums(level)
+        #     if indexsError==True:
+        #         pass
+        #     else:
+        #         listIndexError.append(indexsError)
+        #         print(indexsError)
+        # if len(listIndexError)>0:
+        #     print("CORRELATIVOS INCORRECTOS")
+        #     print(listIndexError)
+        # else:
+        #     print("CORRELATIVOS CORRECTOS")
 subMain()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
