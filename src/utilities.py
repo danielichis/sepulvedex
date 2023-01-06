@@ -2,28 +2,32 @@ import openpyxl
 import pandas as pd
 import os
 import sys
+
 #import PATH from os
 from pathlib import Path
 class pathsManager:
     def __init__(self):
+        self.application_path2=None
         self.currentFolderPath=Path(os.getcwd())
-        self.application_path2=self.get_application_path()
+        self.get_application_path()
     def get_application_path(self):
     # determine if application is a script file or frozen exe
         if getattr(sys, 'frozen', False):
             self.application_path2 = os.path.dirname(sys.executable)
         elif __file__:
             self.application_path2 = os.path.dirname(__file__)
-        self.application_path2 = Path(self.application_path2)
+        self.currentFolderPath = Path(self.application_path2).parent
         
 class configData:
     def __init__(self,configPath) -> None:
         self.wordPath=configPath
         self.data=None
         self.df=self.get_data_config()
+        self.pm=None
     def get_data_config(self):
+        self.pm=pathsManager()
         #metodo para sacar el rango de un excel a partir de su ruta
-        configfile=openpyxl.load_workbook(r"config.xlsx")
+        configfile=openpyxl.load_workbook(os.path.join(self.pm.currentFolderPath,"config.xlsx"))
         sheet=configfile.worksheets[0]
         maxr=sheet.max_row
         maxc=sheet.max_column

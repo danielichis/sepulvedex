@@ -3,6 +3,10 @@
     "K42218.docx": {
         "DNI": [
             {
+                "NRO DNI": "09541342",
+                "DNI ENCONTRADO": "HUGO FABRIZIO BRIGNETI ABASOLO"
+            },
+            {
                 "NRO DNI": "09750507",
                 "DNI ENCONTRADO": "JOAN MANUEL GONZALEZ PEREZ VELASCO"
             },
@@ -11,18 +15,20 @@
                 "DNI ENCONTRADO": "GIANELLA DEL CARMEN ARAGON NU\u00d1EZ"
             },
             {
-                "NRO DNI": "09541342",
-                "DNI ENCONTRADO": "HUGO FABRIZIO BRIGNETI ABASOLO"
-            },
-            {
                 "NRO DNI": "10059295",
                 "DNI ENCONTRADO": "MARIE CATHERINE GONZALEZ PEREZ VELASCO"
             }
         ],
         "RUC": [
             {
-                "NRO DE RUC": "20256149681",
-                "RUC ENCONTRADA": "20256149681 - DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - DETACH S.R.L."
+                "NRO RUC": "20256149681",
+                "RUC ENCONTRADO": "Ruc not found"
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "00128244",
+                "PARTIDA ENCONTRADO": "DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA"
             }
         ]
     },
@@ -71,10 +77,6 @@
             {
                 "NRO DNI": "71849329",
                 "DNI ENCONTRADO": "GERALDINE NAOMI SALAZAR NU\u00d1EZ"
-            },
-            {
-                "NRO DNI": "47899016",
-                "DNI ENCONTRADO": "TINO CHRISTIAN MORENO MORILLO"
             }
         ]
     },
@@ -87,8 +89,14 @@
         ],
         "RUC": [
             {
-                "NRO DE RUC": "20603453892",
-                "RUC ENCONTRADA": "Ruc not found"
+                "NRO RUC": "20603453892",
+                "RUC ENCONTRADO": "Ruc not found"
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "14127941",
+                "PARTIDA ENCONTRADO": "OVERSEAS CARGO FORWARDING S.A.C."
             }
         ]
     },
@@ -120,17 +128,31 @@
             }
         ]
     },
-    "K42786.docx": {
+    "K45970.docx": {
         "DNI": [
             {
-                "NRO DNI": "46162455",
-                "DNI ENCONTRADO": "NAZARET LOYOLA BENAVIDES"
-            }
-        ],
-        "RUC": [
+                "NRO DNI": "07871493",
+                "DNI ENCONTRADO": "MIGUEL ANGEL MORALES MORALES"
+            },
             {
-                "NRO DE RUC": "20604550468",
-                "RUC ENCONTRADA": "Ruc not found"
+                "NRO DNI": "07449941",
+                "DNI ENCONTRADO": "ELIZABETH ZAHEDI LARA MILJANOVICH"
+            },
+            {
+                "NRO DNI": "08081821",
+                "DNI ENCONTRADO": "OFELIA BEATRIZ ESPINOZA DE LA CRUZ"
+            },
+            {
+                "NRO DNI": "07581136",
+                "DNI ENCONTRADO": "FREDDY HUMBERTO SOTOMAYOR IZAGUIRRE"
+            },
+            {
+                "NRO DNI": "07469057",
+                "DNI ENCONTRADO": "MARIA ELENA LARA MILJANOVICH"
+            },
+            {
+                "NRO DNI": "07822876",
+                "DNI ENCONTRADO": "JAIME ENRIQUE ZEA MOSTAJO"
             }
         ]
     }

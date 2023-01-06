@@ -48,7 +48,7 @@ def style_Token(doc,word,comment,specialP=False):
             if p.runs[i].text.find(word) != -1:
                 p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
                 if comment:
-                    p.runs[i-1].add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+                    p.runs[i-1].add_comment(f'El registro no coincide con {word} ',author='BOT CONFRONT')
                     #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def style_Token2(doc,word,comment):
@@ -128,4 +128,4 @@ def readJsonPages():
         validateAllData(value,doc,pathkardOut,False)
         doc=Document(pathkardOut)
         validate_amounts(getText(doc),doc,pathkardOut)
-readJsonPages()
+#readJsonPages()

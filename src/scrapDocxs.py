@@ -36,7 +36,7 @@ class dataWord:
             pass
         elif typeKeys=="PARTIDAS":
             n=8
-            midpattern=r".*"
+            midpattern=r".*?"
             pass
         elif typeKeys=="CES":
             pass
@@ -110,7 +110,8 @@ def GettingkardexData():
         for partid in kardexData['partidaE']:
             partidList.append(partid)
         dataofWords[kardexData['kardex']]['partidE']=partidList
-    with open('dataofWords.json', 'w') as f:
+    infoWords=os.path.join(pm.currentFolderPath,'dataofWords.json')
+    with open(infoWords, 'w') as f:
         json.dump(dataofWords, f,indent=4)
     #print(listDataWord)
 #sub_main()

@@ -10,7 +10,7 @@ class sendEmails:
         self.msg = EmailMessage()
         self.msg['Subject'] = 'Kardexs confrontados'
         self.msg['From'] = 'Bot Sepúlveda'
-        self.msg['To'] = 'dchaconb@uni.pe', 
+        self.msg['To'] = 'lcisneros@sempiterno-group.com',   
         self.currentPathFolder = getCurrentPath()
 
 

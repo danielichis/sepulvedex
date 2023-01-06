@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 from scrapDocxs import dataWord
+from utilities import pathsManager
 import json
 import os
 rucNotFound=True
@@ -15,6 +16,7 @@ class scrapingPages:
         self.pageSunat=None
         self.pageSunarp=None
         self.pageDni=None
+        self.x=pathsManager().currentFolderPath
     def gettingPagesData(self):
         with sync_playwright() as p:
             self.browser = p.chromium.launch(headless=False)
@@ -23,7 +25,8 @@ class scrapingPages:
             self.start_sunat()
             self.start_Sunarp()
             self.start_elDni()
-            files=[file for file in os.listdir("Kardexs") if file.endswith('.docx')]
+            kardexsPath=os.path.join(self.x,"Kardexs")
+            files=[file for file in os.listdir(kardexsPath) if file.endswith('.docx')]
             listDataWord=[]
             for file in files:
                 dWord=dataWord(file)
@@ -68,7 +71,8 @@ class scrapingPages:
                     partids.append(dicpartid)
                 if partidName!=None:
                     dataToConfront[kardexData['kardex']]['partidE']=partids
-            with open('dataofPages.json', 'w') as f:
+            PagesJsonPath=os.path.join(self.x,"dataofPages.json")
+            with open(PagesJsonPath, 'w') as f:
                 json.dump(dataToConfront, f,indent=4)
                     
     def start_sunat(self):
@@ -80,7 +84,7 @@ class scrapingPages:
             try:
                 self.pageSunat.query_selector("input#txtRuc").fill("")
                 self.pageSunat.query_selector("input#txtRuc").fill(ruc)
-                self.pageSunat.query_selector("button#btnAceptar").click()
+                self.pageSunat.query_selector("button#btnAceptar").click(timeout=2000)
                 self.pageSunat.wait_for_timeout(1000)
                 self.pageSunat.wait_for_selector("div.col-sm-7 h4",timeout=2000)
                 rucName=self.pageSunat.query_selector("div.col-sm-7 h4").inner_text()
@@ -88,6 +92,8 @@ class scrapingPages:
                 self.pageSunat.query_selector("button[class='btn btn-danger btnNuevaConsulta']").click()
                 rucNotFound=False
             except:
+                self.pageSunat.goto(self.urlSunat)
+                self.pageSunat.wait_for_load_state(timeout=1000)
                 rucName="Ruc not found"
                 print("Ruc not found")
             return rucName
@@ -110,14 +116,15 @@ class scrapingPages:
             self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("[id=\"frmPartidaDirecta\\:radioPartida\\:1\"]").check()
             self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").click()
             self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("input[role=\"textbox\"]").fill(partida)
-            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click()
+            self.pageSunarp.frame_locator("frame[name=\"main_frame\"]").frame_locator("frame[name=\"main_frame1\"]").locator("button[role=\"button\"]:has-text(\"Buscar\")").click(timeout=6000)
             frame2=self.pageSunarp.frame(name="main_frame1")
-            frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)")
+            frame2.wait_for_selector("tbody tr[data-ri='0'] td:nth-child(6)",timeout=5000)
             direc=frame2.query_selector("tbody tr[data-ri='0'] td:nth-child(6)").inner_text()
             frame2.query_selector("button[id='frmResultadoPartDirecta:btnRegresar']").click()
             print(direc)
         except:
-            direc="Not found"
+            direc="partida not found"
+        return direc
     def start_elDni(self):
         self.pageDni = self.context.new_page()
         self.pageDni.goto(self.elDni)

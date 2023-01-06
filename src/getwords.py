@@ -11,7 +11,7 @@ def download_legacy():
 
     with sync_playwright() as p:
         global context,page,browser
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context=browser.new_context()
         page = context.new_page()
         page.goto(url)
@@ -58,17 +58,14 @@ def get_kardex(kardex):
     download = download_info.value
     page2.close()
     nameFile=kardex+".docx"
-    nameFile=os.path.join("Kardexs",nameFile)
+    pm=pathsManager().currentFolderPath
+    nameFile=os.path.join(pm,"Kardexs",nameFile)
     download.save_as(nameFile)
     print("descargado")
     #driver.get('http://192.168.0.90/legasys/www/legal/consultas/consugeneral.php?mod=2')
     #page.pause()     
 
 def get_list_kardexs():
-    fp=pathsManager().currentFolderPath
-    path=os.path.join(fp,"CDCONF.xlsx")
-    df=pd.read_excel(path)
-
     return get_data_from_gsheet()
 #download_legacy()
-print(get_list_kardexs())
+#print(get_list_kardexs())
