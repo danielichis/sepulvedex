@@ -11,7 +11,7 @@ def ValiteConsecutiveNums(correlativos):
       # Si el número actual no es el número anterior más uno,
       # verificamos si es el primer número de un nuevo grupo
       if correlativos[i + 1]["index"] == grupo_actual:
-        grupo_actual = correlativos[i + 1]
+        grupo_actual = correlativos[i + 1]["index"]
       else:
         return correlativos[i + 1]
   return True
@@ -36,6 +36,7 @@ def ordinals_numbers(doc):
                     "indexP":j,
                     "index":int(corr),
                     "level":1,
+                    "texto":para.text
                 }
                 fullNums1.append(unitDict)
         correlativ2=re.findall(r"^[1-9]{1,2}\.(\d{1,2}).",para.text)
@@ -123,42 +124,47 @@ def validateLetters(doc,numLeters):
     if len(indexsTovalidate)>0:
         indexsErrors=ValiteConsecutiveNums(indexsTovalidate)
     if indexsErrors==True:
-        print("CORRELATIVOS CORRECTOS")
+        print("CORRELATIVOS CARDINALES CORRECTOS")
     else:
-        print("CORRELATIVOS INCORRECTOS")
+        print("CORRELATIVOS CARDINALES INCORRECTOS")
         print(indexsErrors)
-        style_Token2(doc,indexsErrors,True)
+        doc=style_Token2(doc,indexsErrors,True)
+    return doc
+def validateOrdinals(doc):
+    ordinalsTovalidate=ordinals_numbers(doc)
+    listIndexError=[]
+    for level in ordinalsTovalidate:
+        indexsError=True
+        if len(level)>0:
+            indexsError=ValiteConsecutiveNums(level)
+        if indexsError==True:
+            pass
+        else:
+            listIndexError.append(indexsError)
+            print(indexsError)
+    if len(listIndexError)>0:
+        print("CORRELATIVOS ORDINALES INCORRECTOS")
+        for indexError in listIndexError:
+            doc=style_Token2(doc,indexError,True)
+        #print(listIndexError)
+    else:
+        print("CORRELATIVOS ORDINALES CORRECTOS")
 
-def subMain():
-    listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
+    return doc
+def validateCorrelatives():
     pm=pathsManager()
+    listOfDocxFiles=[f for f in os.listdir(os.path.join(pm.currentFolderPath,"Kardexs")) if f.endswith(".docx")]
     cnfd=configData(os.path.join(pm.currentFolderPath,"config.xlsx"))
     numLeters=cnfd.get_data_config()
-    numLeters=numLeters["CORRELATIVOS LETRAS"].values.tolist()
+    numLeters=numLeters["CORRELATIVOS"].values.tolist()
     for file in listOfDocxFiles:
         print(file)
-        doc=docx.Document(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs\\"+file)
-        try:
-            validateLetters(doc,numLeters)
-        except:
-            print("ERROR")
-        # ordinalsTovalidate=ordinals_numbers(doc)
-        # listIndexError=[]
-        # for level in ordinalsTovalidate:
-        #     indexsError=True
-        #     if len(level)>0:
-        #         indexsError=ValiteConsecutiveNums(level)
-        #     if indexsError==True:
-        #         pass
-        #     else:
-        #         listIndexError.append(indexsError)
-        #         print(indexsError)
-        # if len(listIndexError)>0:
-        #     print("CORRELATIVOS INCORRECTOS")
-        #     print(listIndexError)
-        # else:
-        #     print("CORRELATIVOS CORRECTOS")
-subMain()
+        doc=docx.Document(os.path.join(pm.currentFolderPath,"Kardexs",file))
+        doc=validateLetters(doc,numLeters)
+        doc.save(os.path.join(pm.currentFolderPath,"KardexsOut",file))
+        doc=validateOrdinals(doc)
+        doc.save(os.path.join(pm.currentFolderPath,"KardexsOut",file))
+#subMain()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:

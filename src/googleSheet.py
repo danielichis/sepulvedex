@@ -1,10 +1,14 @@
 from muttlib.gsheetsconn import GSheetsClient
 import pandas as pd
+from utilities import pathsManager
 import numpy as np
 from pathlib import Path
 import time
+import os
+pm=pathsManager().currentFolderPath
 
-GOOGLE_SHEETS_SECRETS_JSON_FP = Path(r'C:\Users\BOT CONFRONTACION\Documents\sepulvedex\src\bot sepulveda.json')
+credsPath=os.path.join(pm,"src","bot sepulveda.json")
+GOOGLE_SHEETS_SECRETS_JSON_FP = Path(credsPath)
 GSHEETS_SPREAD_ID = '1jeGPabSE47eSLAGAR7OdKrzy7Dg1gaf222iVPwzi-Bc'
 GSHEETS_WORKSHEET_NAME = 'Hoja 1'
 
@@ -25,6 +29,8 @@ def get_data_from_gsheet():
             listToDownload.append(kardex[0])
             print(kardex[0])
     return listToDownload
+
+#print(get_data_from_gsheet())
 # while True:
 #     print('getting data from google sheet...')
 #     get_data_from_gsheet()
