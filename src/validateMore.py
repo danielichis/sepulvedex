@@ -159,7 +159,7 @@ def validateCorrelatives():
     numLeters=numLeters["CORRELATIVOS"].values.tolist()
     for file in listOfDocxFiles:
         print(file)
-        doc=docx.Document(os.path.join(pm.currentFolderPath,"Kardexs",file))
+        doc=docx.Document(os.path.join(pm.currentFolderPath,"KardexsOut",file))
         doc=validateLetters(doc,numLeters)
         doc.save(os.path.join(pm.currentFolderPath,"KardexsOut",file))
         doc=validateOrdinals(doc)
