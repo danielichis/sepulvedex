@@ -151,6 +151,60 @@ def validateOrdinals(doc):
         print("CORRELATIVOS ORDINALES CORRECTOS")
 
     return doc
+
+# A-->1, B-->2, C-->3, etc.
+
+def alfanumeric_nums(doc):
+    alfanumsTovalidate=[]
+    for i,p in enumerate(doc.paragraphs):
+        alfanums=re.findall(r"^([A-z])\.-|^([A-z])\.|^([A-z])\)",p.text)
+        for alfas in alfanums:
+            for alf in alfas:
+                if alf:
+                    index=ord(alf)-64
+                    unitDict={
+                        "indexP":i,
+                        "correlative":alf,
+                        "text":p.text[:10],
+                        "index":index
+                    }
+                    alfanumsTovalidate.append(unitDict)
+    print(alfanumsTovalidate)
+    return alfanumsTovalidate
+def validateAbdc(doc):
+    alfaNumericsTovalidate=alfanumeric_nums(doc)
+    indexsError=True
+    if len(alfaNumericsTovalidate)>0:
+        indexsError=ValiteConsecutiveNums(alfaNumericsTovalidate)
+    if indexsError==True:
+        print("CORRELATIVOS ALFANUMERICOS CORRECTOS")
+    else:
+        print("CORRELATIVOS ALFANUMERICOS INCORRECTOS")
+        print(indexsError)
+        doc=style_Token2(doc,indexsError,True)
+    return doc
+
+def gettingReferences(doc):
+    listReference=[]
+    for i,p in enumerate(doc.paragraphs):
+        refs=re.findall(r'(\w{5,}) MODIFICACION',p.text)
+        if len(refs)>0:
+            for ref in refs:
+                unitDict={
+                    "indexP":i,
+                    "correlative":ref,
+                }
+                listReference.append(unitDict)
+    return listReference
+def validateReferences(doc):
+    referenceTovalidate=gettingReferences(doc)
+    if len(referenceTovalidate)>1:
+        if referenceTovalidate[0]["correlative"]==referenceTovalidate[1]["correlative"]:
+            print("REFERENCIA CORRECTA")
+        else:
+            print("REFERENCIA INCORRECTA")
+            doc=style_Token2(doc,referenceTovalidate[1],True)
+    return doc
 def validateCorrelatives():
     pm=pathsManager()
     listOfDocxFiles=[f for f in os.listdir(os.path.join(pm.currentFolderPath,"Kardexs")) if f.endswith(".docx")]
@@ -159,12 +213,15 @@ def validateCorrelatives():
     numLeters=numLeters["CORRELATIVOS"].values.tolist()
     for file in listOfDocxFiles:
         print(file)
-        doc=docx.Document(os.path.join(pm.currentFolderPath,"Kardexs",file))
+        krdxOutP=os.path.join(pm.currentFolderPath,"KardexsOut",file)
+        krdxP=os.path.join(pm.currentFolderPath,"Kardexs",file)
+        doc=docx.Document(krdxP)
         doc=validateLetters(doc,numLeters)
-        doc.save(os.path.join(pm.currentFolderPath,"KardexsOut",file))
         doc=validateOrdinals(doc)
-        doc.save(os.path.join(pm.currentFolderPath,"KardexsOut",file))
-#subMain()
+        doc=validateAbdc(doc)
+        doc=validateReferences(doc)
+        doc.save(krdxOutP)
+validateCorrelatives()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:

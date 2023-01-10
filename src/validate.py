@@ -57,7 +57,7 @@ def style_Token2(doc,word,comment):
         if p.runs[i].text.find(str(word["correlative"])) != -1:
             p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
             if comment:
-                p.runs[i].add_comment(f'CORRELATIVO INCORRECTO',author='BOT CONFRONT')
+                p.runs[i].add_comment(f'CORRELATIVO O REFERENCIA INCORRECTO',author='BOT CONFRONT')
                 #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def confront(pathkard,doc, numero,descripction,splitMode):
