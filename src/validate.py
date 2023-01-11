@@ -53,12 +53,11 @@ def style_Token(doc,word,comment,specialP=False):
     return doc
 def style_Token2(doc,word,comment):
     p=doc.paragraphs[word["indexP"]]    
-    for i,r in enumerate(p.runs):
-        if p.runs[i].text.find(str(word["correlative"])) != -1:
-            p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
-            if comment:
-                p.runs[i].add_comment(f'CORRELATIVO O REFERENCIA INCORRECTO',author='BOT CONFRONT')
-                #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+    if p.text.find(word["correlative"]) != -1:
+        p.runs[0].font.highlight_color = WD_COLOR_INDEX.YELLOW
+        if comment:
+            p.runs[0].add_comment(f'CORRELATIVO O REFERENCIA INCORRECTO',author='BOT CONFRONT')
+            #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def confront(pathkard,doc, numero,descripction,splitMode):
     alltext=getText(doc)

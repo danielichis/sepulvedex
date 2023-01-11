@@ -74,15 +74,16 @@ def correlativeLetters(doc,numLeters):
     #numLeters=["PRIMER","SEGUND","TERCER","CUART","QUINT","SEXT","SÉPTIM","OCTAV","NOVEN","DÉCIM"]
     pattern=""
     for i,leter in enumerate(numLeters):
-        for j,c in enumerate(leter):
-            if j==0:
-                pattern0=r"^(%s *" % c
+            for j,c in enumerate(leter["correlative"]):
+                if j==0:
+                    pattern0=r"^(%s *" % c
+                else:
+                    pattern0=pattern0+r"%s *" % c
+            if i==0:
+                pattern=pattern0+r"[AO])"
             else:
-                pattern0=pattern0+r"%s *" % c
-        if i==0:
-            pattern=pattern0+r"[AO])"
-        else:
-            pattern=pattern+r"|%s[AO])" % pattern0
+                pattern=pattern+r"|%s[AO])" % pattern0
+
     setNumsList=[]
     for i,p in enumerate(doc.paragraphs):
         setNums=re.findall(pattern,p.text)
@@ -101,14 +102,14 @@ def getIndexCorrelative(wordCorrelatives,ExcelCorrelatives):
     listIndex=[]
     for i,cor in enumerate(wordCorrelatives):
         for k,netCor in enumerate(ExcelCorrelatives):
-            for j,c in enumerate(netCor):
+            for j,c in enumerate(netCor["correlative"]):
                 if j==0:
                     pattern0=r"^(%s *" % c
                 else:
                     pattern0=pattern0+r"%s *" % c
             if re.match(pattern0+r"[AO])",cor["correlative"]):
                 parIndex={
-                    "index":k+1,
+                    "index":netCor["index"],
                     "correlative":cor["correlative"],
                     "indexP":cor["indexP"]
                 }
@@ -210,7 +211,16 @@ def validateCorrelatives():
     listOfDocxFiles=[f for f in os.listdir(os.path.join(pm.currentFolderPath,"Kardexs")) if f.endswith(".docx")]
     cnfd=configData(os.path.join(pm.currentFolderPath,"config.xlsx"))
     numLeters=cnfd.get_data_config()
-    numLeters=numLeters["CORRELATIVOS"].values.tolist()
+    numLetersExcel=numLeters["CORRELATIVOS"].values.tolist()
+    numLeters=[]
+    for i,corrWords in enumerate(numLetersExcel):
+        splitWords=corrWords.split(",")
+        for word in splitWords:
+            dictCorrelatives={
+                "index":i+1,
+                "correlative":word}
+            numLeters.append(dictCorrelatives)
+    
     for file in listOfDocxFiles:
         print(file)
         krdxOutP=os.path.join(pm.currentFolderPath,"KardexsOut",file)
@@ -221,7 +231,7 @@ def validateCorrelatives():
         doc=validateAbdc(doc)
         doc=validateReferences(doc)
         doc.save(krdxOutP)
-validateCorrelatives()
+#validateCorrelatives()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:

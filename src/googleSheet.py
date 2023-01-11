@@ -9,7 +9,9 @@ pm=pathsManager().currentFolderPath
 
 credsPath=os.path.join(pm,"src","bot sepulveda.json")
 GOOGLE_SHEETS_SECRETS_JSON_FP = Path(credsPath)
+# id de del google sheet
 GSHEETS_SPREAD_ID = '1jeGPabSE47eSLAGAR7OdKrzy7Dg1gaf222iVPwzi-Bc'
+#nombre de la hoja 
 GSHEETS_WORKSHEET_NAME = 'Hoja 1'
 
 

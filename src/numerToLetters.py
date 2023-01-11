@@ -195,19 +195,13 @@ def numero_a_moneda_sunat(numero):
 
   
 def __main__():
-    cadena1 = numero_a_moneda_sunat(37.45)
+    cadena1 = numero_a_moneda_sunat(1)
     cadena2 = numero_a_moneda_sunat(1012121)
     cadena3 = numero_a_moneda_sunat(150)
     cadena4 = numero_a_moneda_sunat(1451.45)
     cadena5 = numero_a_moneda_sunat(1004501245)
     cadena6 = numero_a_letras(-25.00741)
     print(f"{cadena1=}")
-    print(f"{cadena2=}")
-    print(f"{cadena3=}")
-    print(f"{cadena4=}")
-    print(f"{cadena5=}")
-    print(f"{cadena6=}")
-    print(f"{cadena6.lower()}")
     
 if __name__ == "__main__" :
     __main__()
