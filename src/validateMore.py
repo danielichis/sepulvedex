@@ -36,7 +36,6 @@ def ordinals_numbers(doc):
                     "indexP":j,
                     "index":int(corr),
                     "level":1,
-                    "texto":para.text
                 }
                 fullNums1.append(unitDict)
         correlativ2=re.findall(r"^[1-9]{1,2}\.(\d{1,2}).",para.text)
@@ -74,15 +73,16 @@ def correlativeLetters(doc,numLeters):
     #numLeters=["PRIMER","SEGUND","TERCER","CUART","QUINT","SEXT","SÉPTIM","OCTAV","NOVEN","DÉCIM"]
     pattern=""
     for i,leter in enumerate(numLeters):
-            for j,c in enumerate(leter["correlative"]):
-                if j==0:
-                    pattern0=r"^(%s *" % c
-                else:
-                    pattern0=pattern0+r"%s *" % c
-            if i==0:
-                pattern=pattern0+r"[AO])"
+        for j,c in enumerate(leter["correlative"]):
+            if j==0:
+                pattern0=r"^(%s *" % c
             else:
-                pattern=pattern+r"|%s[AO])" % pattern0
+                pattern0=pattern0+r"%s *" % c
+        if i==0:
+            pattern=pattern0+r"[AO])[:.]"
+        else:
+            pattern=pattern+r"|%s[AO])[:.]" % pattern0
+
 
     setNumsList=[]
     for i,p in enumerate(doc.paragraphs):
@@ -107,7 +107,7 @@ def getIndexCorrelative(wordCorrelatives,ExcelCorrelatives):
                     pattern0=r"^(%s *" % c
                 else:
                     pattern0=pattern0+r"%s *" % c
-            if re.match(pattern0+r"[AO])",cor["correlative"]):
+            if re.match(pattern0+r"[AO])$",cor["correlative"]):
                 parIndex={
                     "index":netCor["index"],
                     "correlative":cor["correlative"],
@@ -166,7 +166,6 @@ def alfanumeric_nums(doc):
                     unitDict={
                         "indexP":i,
                         "correlative":alf,
-                        "text":p.text[:10],
                         "index":index
                     }
                     alfanumsTovalidate.append(unitDict)
@@ -231,7 +230,7 @@ def validateCorrelatives():
         doc=validateAbdc(doc)
         doc=validateReferences(doc)
         doc.save(krdxOutP)
-#validateCorrelatives()
+validateCorrelatives()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:

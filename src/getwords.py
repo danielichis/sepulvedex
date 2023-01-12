@@ -24,12 +24,14 @@ def download_legacy():
         kardexs=get_list_kardexs()
         for kardex in kardexs:
             try:
-                get_kardex(kardex)
+                get_kardex(kardex["kardex"])
             except Exception as e:
                 print(e)
-                print(f"descarga fallida {kardex}")
+                kardexf=kardex["kardex"]
+                print(f"descarga fallida {kardexf}")
                 pass
         browser.close()
+    return kardexs
 def get_kardex(kardex):
     print(f"kardex: {kardex} descargando....")
     page.query_selector("input[name='criterio']").fill('')
