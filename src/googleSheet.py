@@ -28,9 +28,9 @@ def get_data_from_gsheet():
     spreadSheet_id, worksheet = (GSHEETS_SPREAD_ID, GSHEETS_WORKSHEET_NAME)
     #gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'C3', header = False,preclean_sheet=False)
     return_df = gsheets_client.to_frame(spreadSheet_id, worksheet = worksheet)
-    print("primera consulta hecha")
+    #print("primera consulta hecha")
     return_df2 = gsheets_client.to_frame(spreadSheet_id, worksheet = sheet2_name)
-    print("segunda consulta hecha")
+    #print("segunda consulta hecha")
     #print(return_df)
     listkardexs=return_df[['Kardex','Confrontado (SI/ NO/ EN PROCESO)',"Confrontador/a"]].values.tolist()
     listaCorreos=return_df2.values.tolist()
@@ -44,10 +44,11 @@ def get_data_from_gsheet():
                 "correo":findEmail(kardex[2],listaCorreos)
                 }
             listToDownload.append(dictkardex)
-    print(listToDownload)
+    
+    #print(listToDownload)
     return listToDownload
 
-print(get_data_from_gsheet())
+#print(get_data_from_gsheet())
 # while True:
 #     print('getting data from google sheet...')
 #     get_data_from_gsheet()

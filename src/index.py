@@ -14,7 +14,7 @@ def main():
     validateCorrelatives() #5 validar correlativos
     amountsValidation0() #6 validar montos
     x = sendEmails() #7 enviar correos
-    x.send() #7 enviar correos
+    x.send(ks) #7 enviar correos
     print("-----------------------------------------PROCESO TERMINADO ............................")
 main()
 
