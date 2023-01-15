@@ -17,7 +17,6 @@ class pathsManager:
         elif __file__:
             self.application_path2 = os.path.dirname(__file__)
         self.currentFolderPath = Path(self.application_path2).parent
-        
 class configData:
     def __init__(self,configPath) -> None:
         self.wordPath=configPath
