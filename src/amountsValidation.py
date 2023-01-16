@@ -66,11 +66,28 @@ def amountsValidation(docxPathOut):
             b = math.floor(bigAmount)
             
             if a == b:
-                para.runs[-1].add_comment("LOS MONTOS COINCIDEN", author='BOT CONFRONT')
-                print("The amounts match")
+                
+                for tab in doc.tables:
+                    for ri, r in enumerate(tab.rows):
+                        for ci, c in enumerate(r.cells):
+                            if ri == 0 and ci == 0 and c.text.strip() == "MONTO DEL PRESTAMO":
+                                c.add_paragraph().add_run().add_comment("LOS MONTOS COINCIDEN", author='BOT CONFRONT')
+                                break
+
+
+
+                # para.runs[-1].add_comment("LOS MONTOS COINCIDEN", author='BOT CONFRONT')
+                # print("The amounts match")
             else:
-                para.runs[-1].add_comment("LOS MONTOS NO COINCIDEN, REVISAR MANUALMENTE", author='BOT CONFRONT')
-                print("The amounts don't match")
+                # para.runs[-1].add_comment("LOS MONTOS NO COINCIDEN, REVISAR MANUALMENTE", author='BOT CONFRONT')
+                # print("The amounts don't match")
+
+                for tab in doc.tables:
+                    for ri, r in enumerate(tab.rows):
+                        for ci, c in enumerate(r.cells):
+                            if ri == 0 and ci == 0 and c.text.strip() == "MONTO DEL PRESTAMO":
+                                c.add_paragraph().add_run().add_comment("LOS MONTOS NO COINCIDEN, REVISAR MANUALMENTE", author='BOT CONFRONT')
+                                break
         
 
             break
@@ -85,9 +102,10 @@ def amountsValidation0():
     files = [f for f in files if f.endswith('.docx')]
     print(files)
     for file in files:
-        docxPath = os.path.join(directory, file)
+        #docxPath = os.path.join(directory, file)
         docxPathOut = os.path.join(directoryOut, file)
         amountsValidation(docxPathOut)
+        print(file)
 
 if __name__=='__main__':
     amountsValidation0()
