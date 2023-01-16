@@ -16,18 +16,21 @@ def sendEmailApi(sents):
     API_VERSION = 'v1'
     SCOPES = ['https://mail.google.com/']
     service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    #check if exits the file
     attachment_docx = path.join(current_parent_path,"KardexsOut", kardex+".docx")
     mimeMessage = MIMEMultipart()
+    if not os.path.isfile(attachment_docx):
+        mimeMessage.attach(MIMEText("No se pudo procesar el documento", 'plain'))
+    else:
+        mimeMessage.attach(MIMEText(kardex+"-BOT", 'plain'))
+        with open(attachment_docx, 'rb') as f:
+            file_data = f.read()
+            file_name = kardex+"-BOT"+".docx"
+            attach_file=MIMEApplication(file_data)
+            attach_file.add_header('Content-Disposition', 'attachment', filename=file_name)
+            mimeMessage.attach(attach_file)
     mimeMessage['to'] = email
     mimeMessage['subject'] = kardex+"-BOT"
-    mimeMessage.attach(MIMEText(kardex+"-BOT", 'plain'))
-    with open(attachment_docx, 'rb') as f:
-        file_data = f.read()
-        file_name = kardex+"-BOT"+".docx"
-        attach_file=MIMEApplication(file_data)
-        attach_file.add_header('Content-Disposition', 'attachment', filename=file_name)
-        mimeMessage.attach(attach_file)
-
     raw_string = base64.urlsafe_b64encode(mimeMessage.as_bytes()).decode()
     message = service.users().messages().send(userId='me', body={'raw': raw_string}).execute()
     print(f"correo enviado a {email} con el kardex {kardex}")

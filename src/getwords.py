@@ -3,7 +3,17 @@ import pandas as pd
 import os
 from googleSheet import get_data_from_gsheet
 from utilities import pathsManager
+
+#function to delete files of folder
+def delete_files(path):
+    for file in os.listdir(path):
+        os.remove(os.path.join(path,file))
+
 def download_legacy():
+    kardexOut=os.path.join(pathsManager().currentFolderPath,"Kardexs")
+    kardexOutFolder=os.path.join(pathsManager().currentFolderPath,"KardexsOut")
+    delete_files(kardexOut)
+    delete_files(kardexOutFolder)
     user="BOT"
     password="BOT"
     url="http://192.168.0.90"
@@ -69,5 +79,4 @@ def get_kardex(kardex):
 
 def get_list_kardexs():
     return get_data_from_gsheet()
-#download_legacy()
-#print(get_list_kardexs())
+

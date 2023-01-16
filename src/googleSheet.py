@@ -3,7 +3,7 @@ import pandas as pd
 from utilities import pathsManager
 import numpy as np
 from pathlib import Path
-import time
+from datetime import datetime
 import os
 pm=pathsManager().currentFolderPath
 
@@ -35,20 +35,41 @@ def get_data_from_gsheet():
     listkardexs=return_df[['Kardex','Confrontado (SI/ NO/ EN PROCESO)',"Confrontador/a"]].values.tolist()
     listaCorreos=return_df2.values.tolist()
     listToDownload=[]
-    for kardex in listkardexs:   
-        if kardex[1] == 'NO':
+    for i,kardex in enumerate(listkardexs):   
+        if kardex[1] == 'EN PROCESO (BOT)':
             dictkardex={
+                "rowNumber":i+2,
                 "kardex":kardex[0],
                 "confrontado":kardex[1],
                 "confrotador":kardex[2],
                 "correo":findEmail(kardex[2],listaCorreos)
                 }
             listToDownload.append(dictkardex)
-    
+    n=len(listToDownload)
+    listToupdate=['BOT EN EJECUCION ...']*n
+    df=pd.DataFrame(listToupdate)
+    #get the current date and time
+    now = str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    cell='E'+str(listToDownload[0]['rowNumber'])
+    cell2='O'+str(listToDownload[0]['rowNumber'])
+    listToupdate2=[now]*n
+    df2=pd.DataFrame(listToupdate2)
+    gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= cell, header = False,preclean_sheet=False)
+    gsheets_client.insert_from_frame(df2, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= cell2, header = False,preclean_sheet=False)
     #print(listToDownload)
     return listToDownload
 
-#print(get_data_from_gsheet())
+def updateSheet():
+    gsheets_client = GSheetsClient(GOOGLE_SHEETS_SECRETS_JSON_FP)
+    spreadSheet_id, worksheet = (GSHEETS_SPREAD_ID, sheet2_name)
+    df=pd.DataFrame([['123','345'],['1223','345']])
+    #gsheets_client.insert_from_frame(df, GSHEETS_SPREAD_ID, index=True, worksheet=worksheet)
+    gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'H6', header = False,preclean_sheet=False)
+            #update range A1:B2
+    
+updateSheet()
+    #gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'C3', header = False,preclean_sheet=False)
+print(get_data_from_gsheet())
 # while True:
 #     print('getting data from google sheet...')
 #     get_data_from_gsheet()
