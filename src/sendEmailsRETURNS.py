@@ -10,14 +10,14 @@ from googleSheet import get_data_from_gsheet
 def sendEmailApi(sents):
     kardex=sents["kardex"]
     email=sents["correo"]
-    current_parent_path = getcwd()
-    CLIENT_SECRET_FILE = path.join(current_parent_path, 'src', 'BOT CONFRONT.json')
+    
+    CLIENT_SECRET_FILE = path.join(pathsManager().currentFolderPath, 'src', 'BOT CONFRONT.json')
     API_NAME = 'gmail'
     API_VERSION = 'v1'
     SCOPES = ['https://mail.google.com/']
     service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
     #check if exits the file
-    attachment_docx = path.join(current_parent_path,"KardexsOut", kardex+".docx")
+    attachment_docx = path.join(pathsManager().currentFolderPath,"KardexsOut", kardex+".docx")
     mimeMessage = MIMEMultipart()
     if not os.path.isfile(attachment_docx):
         mimeMessage.attach(MIMEText("No se pudo procesar el documento", 'plain'))
@@ -42,4 +42,5 @@ def senEmailsApi(listSents):
 if __name__=='__main__':
     listSents=get_data_from_gsheet()
     #print(listSents)
+    #print(path.join(pathsManager().currentFolderPath, 'src', 'BOT CONFRONT.json'))
     senEmailsApi(listSents)

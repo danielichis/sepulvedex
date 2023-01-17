@@ -1,5 +1,12 @@
 {
-    "D5981.docx": {},
+    "D5981.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "73043294",
+                "DNI ENCONTRADO": "GUIDO FABBIO GUERRA CANESSA"
+            }
+        ]
+    },
     "K42218.docx": {
         "DNI": [
             {
@@ -22,7 +29,7 @@
         "RUC": [
             {
                 "NRO RUC": "20256149681",
-                "RUC ENCONTRADO": "Ruc not found"
+                "RUC ENCONTRADO": "20256149681 - DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - DETACH S.R.L."
             }
         ],
         "partidE": [
@@ -90,7 +97,7 @@
         "RUC": [
             {
                 "NRO RUC": "20603453892",
-                "RUC ENCONTRADO": "Ruc not found"
+                "RUC ENCONTRADO": "20603453892 - OVERSEAS CARGO FORWARDING S.A.C. - OC FORWARDING S.A.C."
             }
         ],
         "partidE": [
@@ -120,39 +127,31 @@
             }
         ]
     },
-    "K42780.docx": {
+    "K45239.docx": {
         "DNI": [
             {
-                "NRO DNI": "44454651",
-                "DNI ENCONTRADO": "MARIA ISABEL GRACIELA HOSHI PAZ"
+                "NRO DNI": "08166381",
+                "DNI ENCONTRADO": "TATIANA ELIZABETH ROJAS ALCALDE"
+            },
+            {
+                "NRO DNI": "21556991",
+                "DNI ENCONTRADO": "FERNANDO ALFONSO DEL CARPIO LAVA"
             }
         ]
     },
-    "K45970.docx": {
+    "K46016.docx": {
         "DNI": [
             {
-                "NRO DNI": "07871493",
-                "DNI ENCONTRADO": "MIGUEL ANGEL MORALES MORALES"
+                "NRO DNI": "45217811",
+                "DNI ENCONTRADO": "PIERRE EMIL GURBILLON AGURTO"
             },
             {
-                "NRO DNI": "07449941",
-                "DNI ENCONTRADO": "ELIZABETH ZAHEDI LARA MILJANOVICH"
+                "NRO DNI": "40440724",
+                "DNI ENCONTRADO": "JOSE JAIME AQUINO MALLAUPOMA"
             },
             {
-                "NRO DNI": "08081821",
-                "DNI ENCONTRADO": "OFELIA BEATRIZ ESPINOZA DE LA CRUZ"
-            },
-            {
-                "NRO DNI": "07581136",
-                "DNI ENCONTRADO": "FREDDY HUMBERTO SOTOMAYOR IZAGUIRRE"
-            },
-            {
-                "NRO DNI": "07469057",
-                "DNI ENCONTRADO": "MARIA ELENA LARA MILJANOVICH"
-            },
-            {
-                "NRO DNI": "07822876",
-                "DNI ENCONTRADO": "JAIME ENRIQUE ZEA MOSTAJO"
+                "NRO DNI": "09647947",
+                "DNI ENCONTRADO": "PABLO ANTONIO VALVERDE TARAZONA"
             }
         ]
     }

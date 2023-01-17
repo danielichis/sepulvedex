@@ -32,7 +32,7 @@ def download_legacy(ks):
         page.wait_for_timeout(3000)
         page.goto(url2)
         page.wait_for_selector("input[name='criterio']")
-        kardexs=[k for k in ks["kardex"]]
+        kardexs=ks
         for kardex in kardexs:
             try:
                 get_kardex(kardex["kardex"])
