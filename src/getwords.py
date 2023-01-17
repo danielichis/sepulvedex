@@ -7,10 +7,10 @@ from utilities import pathsManager
 #function to delete files of folder
 def delete_files(path):
     for file in os.listdir(path):
-        os.remove(os.path.join(path,file))
+        if file.endswith(".docx"):
+            os.remove(os.path.join(path,file))
 
-def download_legacy():
-    return get_data_from_gsheet()
+def download_legacy(ks):
     kardexOut=os.path.join(pathsManager().currentFolderPath,"Kardexs")
     kardexOutFolder=os.path.join(pathsManager().currentFolderPath,"KardexsOut")
     delete_files(kardexOut)
@@ -32,7 +32,7 @@ def download_legacy():
         page.wait_for_timeout(3000)
         page.goto(url2)
         page.wait_for_selector("input[name='criterio']")
-        kardexs=get_list_kardexs()
+        kardexs=[k for k in ks["kardex"]]
         for kardex in kardexs:
             try:
                 get_kardex(kardex["kardex"])

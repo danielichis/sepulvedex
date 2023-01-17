@@ -13,6 +13,7 @@ class sendEmails:
         self.currentPathFolder = getCurrentPath()
         
     def sendEmails(self,listOfSents):
+        print("ENVIANDO CORREOS...")
         for sent in listOfSents:
             docxPath = os.path.join(self.currentPathFolder, "kardexsOut", sent["kardex"]+".docx")
             # check if the file exists
@@ -25,10 +26,10 @@ class sendEmails:
                 self.msg.set_content(messageEmail)
                 with open(docxPath, 'rb') as f:
                     file_data = f.read()
-                    file_name = sent["kardex"]+".docx"
+                    file_name = sent["kardex"]+"-BOT"+".docx"
                     self.msg.add_attachment(file_data, maintype = 'application', subtype = 'docx', filename = file_name)
                     
-            self.msg['Subject'] = 'Kardexs confrontados'
+            self.msg['Subject'] =sent["kardex"]+"-BOT"
             self.msg['From'] = 'Bot Sepúlveda'
             self.msg['To'] = sent["correo"]
             context = ssl.create_default_context()

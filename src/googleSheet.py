@@ -24,6 +24,7 @@ def findEmail(confrontadora,listaCorreos):
     return "no encontrado"
 
 def get_data_from_gsheet():
+    print("leyendo el google sheet...")
     gsheets_client = GSheetsClient(GOOGLE_SHEETS_SECRETS_JSON_FP)
     spreadSheet_id, worksheet = (GSHEETS_SPREAD_ID, GSHEETS_WORKSHEET_NAME)
     #gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'C3', header = False,preclean_sheet=False)
