@@ -59,6 +59,7 @@ def style_Token3(doc,runText,comment,pIndex):
             if comment:
                 p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
                 p.runs[i].add_comment(f'ERROR EN VALIDACION DE MONEDAS: {runText} ',author='BOT CONFRONT')
+                print("comentado...")
                 #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def style_Token2(doc,word,comment):
@@ -121,7 +122,7 @@ def validate_amounts(alltext,doc,pathkardOut):
         else:
             print(f"OK {mont[0]} {mont[1]} {x}")
 
-def validate_currency(alltext,doc):
+def validate_currency(doc):
     # Getting more info
     correctDolarSimbols=["$","US$","US$.","$."]
     correctSolSimbols=["S/.","S/","s/.","s/"]
@@ -132,13 +133,12 @@ def validate_currency(alltext,doc):
     index=[]
     amountsCurrency=[]
     for j,p in enumerate(doc.paragraphs):
-        amountsCurrency=re.findall(r"(\S*)( [0-9,´]*\.\d{2} \([\w\s]* [Y-y]? ?00/100 )(.*?)(\))",p.text)
+        amountsCurrency=re.findall(r"(\S*)( [0-9,´]*\.\d{2} )\(([\w\s]* [Y-y]? ?00/100)( .*?)(\))",p.text)
         for i,amount in enumerate(amountsCurrency):
             currencySymbol=amount[0]
-            currencyDescription=amount[2]
+            currencyDescription=amount[3]
             currencyDescription=currencyDescription.strip()
-            textToResalt="".join(amount)
-            pText=amount[1]
+            textToResalt=amount[2]
             if currencySymbol in wholeSimbols and currencyDescription in wholeDescriptions:
                 if currencySymbol in correctSolSimbols and currencyDescription in correctSolDescription:
                     #print("OK")
@@ -148,10 +148,12 @@ def validate_currency(alltext,doc):
                     pass
                 else:
                     print("Resaltando...")
-                    style_Token3(doc,currencySymbol,True,j)
+                    split_Runs(doc,textToResalt)
+                    style_Token3(doc,textToResalt,True,j)
             else:
                 print("Resaltando...")
-                style_Token3(doc, currencySymbol,True,j)
+                split_Runs(doc,textToResalt)
+                style_Token3(doc, textToResalt,True,j)
     return doc
 
 def readJsonPages():
@@ -170,7 +172,15 @@ def readJsonPages():
         validateAllData(value,doc,pathkardOut,False) #resaltar y comentar
         doc=Document(pathkardOut)
         validate_amounts(getText(doc),doc,pathkardOut)# validar montos
-        doc=validate_currency(getText(doc),doc)# validar moneda
+        doc=validate_currency(doc)# validar moneda
         doc.save(pathkardOut)
 if __name__ == "__main__":
-    readJsonPages()
+    pm=pathsManager()
+    listOfKardexs=os.listdir(os.path.join(pm.currentFolderPath,"Kardexs"))
+    for kardex in listOfKardexs:
+        print(f"reading ------------{kardex}----------")
+        pathkardOut=os.path.join(pm.currentFolderPath,"Kardexs",kardex)
+        doc=Document(pathkardOut)
+        doc=validate_currency(doc)
+        doc.save(pathkardOut)
+    #readJsonPages()

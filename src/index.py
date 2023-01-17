@@ -18,6 +18,6 @@ def main():
     amountsValidation0() #6 validar montos
     senEmailsApi(ks) #7 enviar correos
     updateSheet(ks) #8 actualizar google sheet
-    print("-----------------------------------------PROCESO TERMINADO ............................")
+    print("------------------------------PROCESO TERMINADO ............................")
 main()
 
