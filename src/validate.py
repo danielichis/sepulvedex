@@ -46,10 +46,20 @@ def style_Token(doc,word,comment,specialP=False):
     for p in doc.paragraphs:
         for i,r in enumerate(p.runs):
             if p.runs[i].text.find(word) != -1:
-                p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
                 if comment:
+                    p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
                     p.runs[i-1].add_comment(f'El registro no coincide con {word} ',author='BOT CONFRONT')
                     #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+    return doc
+
+def style_Token3(doc,runText,comment,pIndex):
+    p=doc.paragraphs[pIndex]
+    for i,r in enumerate(p.runs):
+        if p.runs[i].text.find(runText) != -1:
+            if comment:
+                p.runs[i].font.highlight_color = WD_COLOR_INDEX.YELLOW
+                p.runs[i].add_comment(f'ERROR EN VALIDACION DE MONEDAS: {runText} ',author='BOT CONFRONT')
+                #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def style_Token2(doc,word,comment):
     p=doc.paragraphs[word["indexP"]]    
@@ -111,6 +121,39 @@ def validate_amounts(alltext,doc,pathkardOut):
         else:
             print(f"OK {mont[0]} {mont[1]} {x}")
 
+def validate_currency(alltext,doc):
+    # Getting more info
+    correctDolarSimbols=["$","US$","US$.","$."]
+    correctSolSimbols=["S/.","S/","s/.","s/"]
+    wholeSimbols=correctDolarSimbols+correctSolSimbols
+    correctDolarDescription=["DOLAR","DOL","DOLARES","DÓLAR","DÓLARES","DÓLARES DE LOS ESTADOS UNIDOS DE AMÉRICA","DOLARES AMERICANOS","DÓLARES AMERICANOS"]
+    correctSolDescription=["SOL","SOLES","NUEVOS SOLES","NUEVO SOL"]
+    wholeDescriptions=correctDolarDescription+correctSolDescription
+    index=[]
+    amountsCurrency=[]
+    for j,p in enumerate(doc.paragraphs):
+        amountsCurrency=re.findall(r"(\S*)( [0-9,´]*\.\d{2} \([\w\s]* [Y-y]? ?00/100 )(.*?)(\))",p.text)
+        for i,amount in enumerate(amountsCurrency):
+            currencySymbol=amount[0]
+            currencyDescription=amount[2]
+            currencyDescription=currencyDescription.strip()
+            textToResalt="".join(amount)
+            pText=amount[1]
+            if currencySymbol in wholeSimbols and currencyDescription in wholeDescriptions:
+                if currencySymbol in correctSolSimbols and currencyDescription in correctSolDescription:
+                    #print("OK")
+                    pass
+                elif currencySymbol in correctDolarSimbols and currencyDescription in correctDolarDescription:
+                    #print("OK")
+                    pass
+                else:
+                    print("Resaltando...")
+                    style_Token3(doc,currencySymbol,True,j)
+            else:
+                print("Resaltando...")
+                style_Token3(doc, currencySymbol,True,j)
+    return doc
+
 def readJsonPages():
     pm=pathsManager()
     jsonPath=os.path.join(pm.currentFolderPath,"dataofPages.json")
@@ -123,8 +166,11 @@ def readJsonPages():
         doc=Document(pathkard)
         doc.save(pathkardOut)
         value = data[key]
-        validateAllData(value,doc,pathkardOut,True)
-        validateAllData(value,doc,pathkardOut,False)
+        validateAllData(value,doc,pathkardOut,True) #splitear
+        validateAllData(value,doc,pathkardOut,False) #resaltar y comentar
         doc=Document(pathkardOut)
-        validate_amounts(getText(doc),doc,pathkardOut)
-#readJsonPages()
+        validate_amounts(getText(doc),doc,pathkardOut)# validar montos
+        doc=validate_currency(getText(doc),doc)# validar moneda
+        doc.save(pathkardOut)
+if __name__ == "__main__":
+    readJsonPages()

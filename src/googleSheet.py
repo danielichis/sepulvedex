@@ -59,17 +59,27 @@ def get_data_from_gsheet():
     #print(listToDownload)
     return listToDownload
 
-def updateSheet():
+def updateSheet(listToDownload):
     gsheets_client = GSheetsClient(GOOGLE_SHEETS_SECRETS_JSON_FP)
-    spreadSheet_id, worksheet = (GSHEETS_SPREAD_ID, sheet2_name)
-    df=pd.DataFrame([['123','345'],['1223','345']])
-    #gsheets_client.insert_from_frame(df, GSHEETS_SPREAD_ID, index=True, worksheet=worksheet)
-    gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'H6', header = False,preclean_sheet=False)
-            #update range A1:B2
-    
-updateSheet()
+    spreadSheet_id, worksheet = (GSHEETS_SPREAD_ID, GSHEETS_WORKSHEET_NAME)
     #gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'C3', header = False,preclean_sheet=False)
-print(get_data_from_gsheet())
+    return_df = gsheets_client.to_frame(spreadSheet_id, worksheet = worksheet)
+    #print("primera consulta hecha")
+    n=len(listToDownload)
+    listToupdate=['SI']*n
+    df=pd.DataFrame(listToupdate)
+    #get the current date and time
+    now = str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    cell='E'+str(listToDownload[0]['rowNumber'])
+    cell2='O'+str(listToDownload[0]['rowNumber'])
+    listToupdate2=[now]*n
+    df2=pd.DataFrame(listToupdate2)
+    gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= cell, header = False,preclean_sheet=False)
+    gsheets_client.insert_from_frame(df2, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= cell2, header = False,preclean_sheet=False)
+    
+#updateSheet()
+    #gsheets_client.insert_from_frame(df, spreadSheet_id, index = False, worksheet = worksheet, first_cell_loc= 'C3', header = False,preclean_sheet=False)
+#print(get_data_from_gsheet())
 # while True:
 #     print('getting data from google sheet...')
 #     get_data_from_gsheet()

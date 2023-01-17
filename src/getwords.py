@@ -10,6 +10,7 @@ def delete_files(path):
         os.remove(os.path.join(path,file))
 
 def download_legacy():
+    return get_data_from_gsheet()
     kardexOut=os.path.join(pathsManager().currentFolderPath,"Kardexs")
     kardexOutFolder=os.path.join(pathsManager().currentFolderPath,"KardexsOut")
     delete_files(kardexOut)

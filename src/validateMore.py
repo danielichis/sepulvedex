@@ -207,7 +207,7 @@ def validateReferences(doc):
     return doc
 def validateCorrelatives():
     pm=pathsManager()
-    listOfDocxFiles=[f for f in os.listdir(os.path.join(pm.currentFolderPath,"Kardexs")) if f.endswith(".docx")]
+    listOfDocxFiles=[f for f in os.listdir(os.path.join(pm.currentFolderPath,"KardexsOut")) if f.endswith(".docx")]
     cnfd=configData(os.path.join(pm.currentFolderPath,"config.xlsx"))
     numLeters=cnfd.get_data_config()
     numLetersExcel=numLeters["CORRELATIVOS"].values.tolist()
@@ -223,14 +223,13 @@ def validateCorrelatives():
     for file in listOfDocxFiles:
         print(file)
         krdxOutP=os.path.join(pm.currentFolderPath,"KardexsOut",file)
-        krdxP=os.path.join(pm.currentFolderPath,"Kardexs",file)
-        doc=docx.Document(krdxP)
+        doc=docx.Document(krdxOutP)
         doc=validateLetters(doc,numLeters)
         doc=validateOrdinals(doc)
         doc=validateAbdc(doc)
         doc=validateReferences(doc)
         doc.save(krdxOutP)
-validateCorrelatives()
+#validateCorrelatives()
 #listOfDocxFiles=[f for f in os.listdir(r"C:\DanielBots\Sepulveda\sepulvedex\Kardexs") if f.endswith(".docx")]
 
 # for file in listOfDocxFiles:

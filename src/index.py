@@ -5,6 +5,8 @@ from validate import readJsonPages
 from validateMore import validateCorrelatives
 from amountsValidation import amountsValidation0
 from sendEmails import sendEmails
+from googleSheet import get_data_from_gsheet
+from googleSheet import updateSheet
 def main():
     ks=download_legacy() #1 descargar words de legacy a la carpeta kardexs
     GettingkardexData()#2 obtener los datos de los words y guardarlos en dataofWords.json
@@ -15,6 +17,7 @@ def main():
     amountsValidation0() #6 validar montos
     x = sendEmails() #7 enviar correos
     x.sendEmails(ks) #7 enviar correos
+    updateSheet(ks) #8 actualizar google sheet
     print("-----------------------------------------PROCESO TERMINADO ............................")
 main()
 
