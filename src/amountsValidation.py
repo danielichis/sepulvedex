@@ -11,15 +11,8 @@ def amountsValidation(docxPathOut):
     for para in doc.paragraphs:
         if para.text.strip() == "MUTUO CON GARANTIA HIPOTECARIA":
             cellAmounts = []
-            rowText = []
-            tableText = []
             tables = {}
-            wholeTable = {}
-            rowsLens = []
             realDf = pd.DataFrame()
-            if len(doc.tables) == 0:
-                print("No tables found")
-                break
             for i, table in enumerate(doc.tables):
                 for row in table.rows:
                     for j,cell in enumerate(row.cells):
@@ -57,7 +50,8 @@ def amountsValidation(docxPathOut):
                 cellAmount = cellAmount.replace(",", "")
                 cellAmounts.append(float(cellAmount))
             
-
+            if realDf.empty:
+                break
             c = realDf.iloc[3, 4]
             bigAmount = re.findall(r'[\d,.]+', c)
             bigAmount = bigAmount[0]
@@ -82,13 +76,13 @@ def amountsValidation(docxPathOut):
 
 
 def amountsValidation0():
-    directory = os.path.join(pm().currentFolderPath, 'Kardexs')
+    # directory = os.path.join(pm().currentFolderPath, 'Kardexs')
     directoryOut = os.path.join(pm().currentFolderPath, 'KardexsOut')
-    files = os.listdir(directory)
+    files = os.listdir(directoryOut)
     files = [f for f in files if f.endswith('.docx')]
     print(files)
     for file in files:
-        docxPath = os.path.join(directory, file)
+        # docxPath = os.path.join(directory, file)
         docxPathOut = os.path.join(directoryOut, file)
         amountsValidation(docxPathOut)
 
