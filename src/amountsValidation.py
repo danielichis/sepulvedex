@@ -17,7 +17,9 @@ def amountsValidation(docxPathOut):
             wholeTable = {}
             rowsLens = []
             realDf = pd.DataFrame()
-
+            if len(doc.tables) == 0:
+                print("No tables found")
+                break
             for i, table in enumerate(doc.tables):
                 for row in table.rows:
                     for j,cell in enumerate(row.cells):
