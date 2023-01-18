@@ -9,6 +9,9 @@ from googleSheet import get_data_from_gsheet
 from googleSheet import updateSheet
 def main():
     ks=get_data_from_gsheet()
+    if ks==None:
+        print("NO HAY KARDEX PARA PROCESAR EN LA HOJA DE CALCULO")
+        return
     download_legacy(ks) #1 descargar words de legacy a la carpeta kardexs
     GettingkardexData()#2 obtener los datos de los words y guardarlos en dataofWords.json
     scrpy=scrapingPages()#3 obtener los datos de las paginas y guardarlos en dataofPages.json

@@ -47,6 +47,8 @@ def get_data_from_gsheet():
                 }
             listToDownload.append(dictkardex)
     n=len(listToDownload)
+    if n==0:
+        return 
     listToupdate=['BOT EN EJECUCION ...']*n
     df=pd.DataFrame(listToupdate)
     #get the current date and time
