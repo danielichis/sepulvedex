@@ -32,15 +32,18 @@ def split_Runs(doc,word):
                     font_object.name = r.font.name
                 except:
                     pass
-                if r.text.find(word) != -1:
-                    before, word, after = split_text(r.text, word)
-                    #clone the format of the original run
-                    p.add_run(before,style="CommentsStyle")
-                    p.add_run("",style="CommentsStyle")
-                    p.add_run(word,style="CommentsStyle")
-                    p.add_run(after,style="CommentsStyle")
-                else:
-                    p.add_run(r.text,style="CommentsStyle")
+                try:
+                    if r.text.find(word) != -1:
+                        before, word, after = split_text(r.text, word)
+                        #clone the format of the original run
+                        p.add_run(before,style="CommentsStyle")
+                        p.add_run("",style="CommentsStyle")
+                        p.add_run(word,style="CommentsStyle")
+                        p.add_run(after,style="CommentsStyle")
+                    else:
+                        p.add_run(r.text,style="CommentsStyle")
+                except:
+                    print("error")
     return doc
 def style_Token(doc,word,comment,specialP=False):
     for p in doc.paragraphs:
@@ -63,12 +66,15 @@ def style_Token3(doc,runText,comment,pIndex):
                 #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
     return doc
 def style_Token2(doc,word,comment):
-    p=doc.paragraphs[word["indexP"]]    
-    if p.text.find(word["correlative"]) != -1:
-        p.runs[0].font.highlight_color = WD_COLOR_INDEX.YELLOW
-        if comment:
-            p.runs[0].add_comment(f'CORRELATIVO O REFERENCIA INCORRECTO',author='BOT CONFRONT')
-            #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+    try:
+        p=doc.paragraphs[word["indexP"]]    
+        if p.text.find(word["correlative"]) != -1:
+            p.runs[0].font.highlight_color = WD_COLOR_INDEX.YELLOW
+            if comment:
+                p.runs[0].add_comment(f'CORRELATIVO O REFERENCIA INCORRECTO',author='BOT CONFRONT')
+                #r.add_comment(f'{word} No se encuentra en el documento',author='BOT CONFRONT')
+    except:
+        print("error style_Token2")
     return doc
 def confront(pathkard,doc, numero,descripction,splitMode):
     alltext=getText(doc)

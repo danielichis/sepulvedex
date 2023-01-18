@@ -1,157 +1,311 @@
 {
-    "D5981.docx": {
+    "K44615.docx": {
         "DNI": [
             {
-                "NRO DNI": "73043294",
-                "DNI ENCONTRADO": "GUIDO FABBIO GUERRA CANESSA"
+                "NRO DNI": "07845655",
+                "DNI ENCONTRADO": "MIRTHA MARIA HERNANDEZ ARROYO"
+            },
+            {
+                "NRO DNI": "46850571",
+                "DNI ENCONTRADO": "JUAN ARTURO MENDIETA HERNANDEZ"
             }
         ]
     },
-    "K42218.docx": {
+    "K45663.docx": {
         "DNI": [
             {
-                "NRO DNI": "09541342",
-                "DNI ENCONTRADO": "HUGO FABRIZIO BRIGNETI ABASOLO"
+                "NRO DNI": "46865795",
+                "DNI ENCONTRADO": "PAMELA SALOME VASQUEZ FERNANDEZ"
             },
             {
-                "NRO DNI": "09750507",
-                "DNI ENCONTRADO": "JOAN MANUEL GONZALEZ PEREZ VELASCO"
-            },
-            {
-                "NRO DNI": "42538150",
-                "DNI ENCONTRADO": "GIANELLA DEL CARMEN ARAGON NU\u00d1EZ"
-            },
-            {
-                "NRO DNI": "10059295",
-                "DNI ENCONTRADO": "MARIE CATHERINE GONZALEZ PEREZ VELASCO"
+                "NRO DNI": "42925082",
+                "DNI ENCONTRADO": "CLAUDIA MARCELA SALAS ANGELES"
             }
         ],
         "RUC": [
             {
-                "NRO RUC": "20256149681",
-                "RUC ENCONTRADO": "20256149681 - DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - DETACH S.R.L."
+                "NRO RUC": "20601435731",
+                "RUC ENCONTRADO": " PROYECTOS INMOBILIARIOS ADHARA S.A.C."
             }
         ],
         "partidE": [
             {
-                "NRO PARTIDA": "00128244",
-                "PARTIDA ENCONTRADO": "DETACH INGENIERIA SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA"
+                "NRO PARTIDA": "11238684",
+                "PARTIDA ENCONTRADO": "INVERSIONES MRH S.A.C."
             }
         ]
     },
-    "K42306.docx": {
+    "K45785.docx": {
         "DNI": [
             {
-                "NRO DNI": "47177635",
-                "DNI ENCONTRADO": "CESAR ANTONIO GARCIA PASTOR"
+                "NRO DNI": "07823885",
+                "DNI ENCONTRADO": "ERNESTO MILCIADES ALVAREZ VILLANUEVA"
             },
             {
-                "NRO DNI": "40693196",
-                "DNI ENCONTRADO": "REYNA ISABEL ESPINOZA HUERTA"
+                "NRO DNI": "07905319",
+                "DNI ENCONTRADO": "JUAN ARMANDO VERA RAMIREZ"
             }
         ]
     },
-    "K42564.docx": {
+    "K45855.docx": {
         "DNI": [
             {
-                "NRO DNI": "09295515",
-                "DNI ENCONTRADO": "SERGIO MIGUEL HUARCAYA FAJARDO"
-            }
-        ]
-    },
-    "K42598.docx": {
-        "DNI": [
-            {
-                "NRO DNI": "10219327",
-                "DNI ENCONTRADO": "VERONICA MARIA HENRICI VARGAS"
+                "NRO DNI": "06521790",
+                "DNI ENCONTRADO": "RICARDO ARISTIDES AGUIRRE ARRIZ"
             },
             {
-                "NRO DNI": "20567804",
-                "DNI ENCONTRADO": "OLGA ELIZABETH LAOS SANTA MARIA"
-            }
-        ]
-    },
-    "K42640.docx": {
-        "DNI": [
+                "NRO DNI": "08263467",
+                "DNI ENCONTRADO": "RENZO GINO ACERVO PORRAS"
+            },
             {
-                "NRO DNI": "44540063",
-                "DNI ENCONTRADO": "THAIS MAGGIOLO COOK"
-            }
-        ]
-    },
-    "K42726.docx": {
-        "DNI": [
+                "NRO DNI": "46374487",
+                "DNI ENCONTRADO": "LUZ EDITH SARAVIA TASAYCO"
+            },
             {
-                "NRO DNI": "71849329",
-                "DNI ENCONTRADO": "GERALDINE NAOMI SALAZAR NU\u00d1EZ"
-            }
-        ]
-    },
-    "K42767.docx": {
-        "DNI": [
+                "NRO DNI": "44488887",
+                "DNI ENCONTRADO": "ERICK ESTEBAN CASALINO JORDAN"
+            },
             {
-                "NRO DNI": "43981926",
-                "DNI ENCONTRADO": "MARLON VICTOR VIVAS ZEVALLOS"
+                "NRO DNI": "40503248",
+                "DNI ENCONTRADO": "JAVIER TAMASHIRO MIYAGI"
+            },
+            {
+                "NRO DNI": "40699584",
+                "DNI ENCONTRADO": "GUILIANNA MABEL ONTANEDA MANDUJANO"
+            },
+            {
+                "NRO DNI": "40602611",
+                "DNI ENCONTRADO": "WALKER RICARDO BONILLA RIVERO"
+            },
+            {
+                "NRO DNI": "42621338",
+                "DNI ENCONTRADO": "GABILU BARCELLOS TAIMAN"
             }
         ],
         "RUC": [
             {
-                "NRO RUC": "20603453892",
-                "RUC ENCONTRADO": "20603453892 - OVERSEAS CARGO FORWARDING S.A.C. - OC FORWARDING S.A.C."
+                "NRO RUC": "20379859888",
+                "RUC ENCONTRADO": " GRUPO CORIL SOCIEDAD ADMINISTRADORA DE FONDOS S.A."
+            },
+            {
+                "NRO RUC": "20608029363",
+                "RUC ENCONTRADO": " INMOBILIARIA DEL SUR NEWCO SOCIEDAD ANONIMA CERRADA "
+            },
+            {
+                "NRO RUC": "20518770471",
+                "RUC ENCONTRADO": " AGROMIN LA BONITA SAC"
             }
         ],
         "partidE": [
             {
-                "NRO PARTIDA": "14127941",
-                "PARTIDA ENCONTRADO": "OVERSEAS CARGO FORWARDING S.A.C."
+                "NRO PARTIDA": "11019348",
+                "PARTIDA ENCONTRADO": "GRUPO CORIL SOCIEDAD ADMINISTRADORA DE FONDOS S.A."
+            },
+            {
+                "NRO PARTIDA": "14669639",
+                "PARTIDA ENCONTRADO": "INMOBILIARIA DEL SUR NEWCO SOCIEDAD ANONIMA CERRADA"
+            },
+            {
+                "NRO PARTIDA": "12135466",
+                "PARTIDA ENCONTRADO": "AGROMIN LA BONITA SAC"
             }
         ]
     },
-    "K42772.docx": {
+    "K45860.docx": {
         "DNI": [
             {
-                "NRO DNI": "23360004",
-                "DNI ENCONTRADO": "ALMES DEMETRIO ALTEZ ZAMBRANO"
-            },
+                "NRO DNI": "07971023",
+                "DNI ENCONTRADO": "ROBERTO CARLOS BABA YAMAMOTO"
+            }
+        ],
+        "RUC": [
             {
-                "NRO DNI": "23362198",
-                "DNI ENCONTRADO": "CARMEN ROSA TORRE FLORES DE ALTEZ"
+                "NRO RUC": "20511904162",
+                "RUC ENCONTRADO": " ENTIDAD DE DESARROLLO A LA PEQUE\u00d1A Y MICRO EMPRESA MICASITA SOCIEDAD ANONIMA (EDPYME MICASITA S.A.)"
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "11828095",
+                "PARTIDA ENCONTRADO": "ENTIDAD DE DESARROLLO A LA PEQUE\u00c3\u0091A Y MICRO EMPRESA MICASITA SOCIEDAD ANONIMA"
             }
         ]
     },
-    "K42775.docx": {
+    "K45871.docx": {
         "DNI": [
             {
-                "NRO DNI": "71490730",
-                "DNI ENCONTRADO": "ANDREA MADELEINE MANASSERO PERALTA"
+                "NRO DNI": "09533370",
+                "DNI ENCONTRADO": "FERNANDO VALENTIN MARTINEZ CACEDA"
+            },
+            {
+                "NRO DNI": "08675430",
+                "DNI ENCONTRADO": "EDGAR JULIAN BECERRA OLIVA"
+            },
+            {
+                "NRO DNI": "48494399",
+                "DNI ENCONTRADO": "MARIA ALEJANDRA VILLAVICENCIO RODRIGUEZ"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO RUC": "20524546206",
+                "RUC ENCONTRADO": " MAREAUTO PERU S.A"
+            },
+            {
+                "NRO RUC": "20556216089",
+                "RUC ENCONTRADO": " CORFID CORPORACION FIDUCIARIA S.A."
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "12422894",
+                "PARTIDA ENCONTRADO": "MAREAUTO PERU S.A."
+            },
+            {
+                "NRO PARTIDA": "13472782",
+                "PARTIDA ENCONTRADO": "CORFID CORPORACION FIDUCIARIA S.A."
             }
         ]
     },
-    "K45239.docx": {
+    "k45884.docx": {
         "DNI": [
             {
-                "NRO DNI": "08166381",
-                "DNI ENCONTRADO": "TATIANA ELIZABETH ROJAS ALCALDE"
-            },
+                "NRO DNI": "43143058",
+                "DNI ENCONTRADO": "PALOMA ARAMBURU LINARES"
+            }
+        ],
+        "RUC": [
             {
-                "NRO DNI": "21556991",
-                "DNI ENCONTRADO": "FERNANDO ALFONSO DEL CARPIO LAVA"
+                "NRO RUC": "20556324302",
+                "RUC ENCONTRADO": " ENDEAVOR PERU"
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "13148463",
+                "PARTIDA ENCONTRADO": "ENDEAVOR PERU"
             }
         ]
     },
-    "K46016.docx": {
+    "K45888.docx": {
         "DNI": [
             {
-                "NRO DNI": "45217811",
-                "DNI ENCONTRADO": "PIERRE EMIL GURBILLON AGURTO"
+                "NRO DNI": "70746193",
+                "DNI ENCONTRADO": "GIACOMO BACIGALUPO LOAYZA"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO RUC": "20565993390",
+                "RUC ENCONTRADO": " GRUPO NORTE FACILITY PERU S.A.C."
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "13312620",
+                "PARTIDA ENCONTRADO": "GRUPO NORTE FACILITY PERU S.A.C."
+            }
+        ]
+    },
+    "K45908.docx": {
+        "RUC": [
+            {
+                "NRO RUC": "20600898052",
+                "RUC ENCONTRADO": " FOLLOW UP PERU S.A.C."
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "13544203",
+                "PARTIDA ENCONTRADO": "FOLLOW UP PERU S.A.C."
+            }
+        ]
+    },
+    "K45917.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "06453300",
+                "DNI ENCONTRADO": "JORGE ENRIQUE RIVERO BARRIGA"
             },
             {
-                "NRO DNI": "40440724",
-                "DNI ENCONTRADO": "JOSE JAIME AQUINO MALLAUPOMA"
+                "NRO DNI": "06789451",
+                "DNI ENCONTRADO": "MARIA SOCORRO VARGAS GUTIERREZ"
+            }
+        ]
+    },
+    "K45923.docx": {
+        "RUC": [
+            {
+                "NRO RUC": "20100963834",
+                "RUC ENCONTRADO": " CIA ERICSSON S.A."
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "11016925",
+                "PARTIDA ENCONTRADO": "COMPA\u00c3\u0091IA ERICSSON S.A."
+            }
+        ]
+    },
+    "K45924.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "46504726",
+                "DNI ENCONTRADO": "FABIAN LLANOS SOLORZANO"
+            }
+        ]
+    },
+    "K45932.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "09867796",
+                "DNI ENCONTRADO": "LUIS ANTONIO GARAVITO PAREDES"
             },
             {
-                "NRO DNI": "09647947",
-                "DNI ENCONTRADO": "PABLO ANTONIO VALVERDE TARAZONA"
+                "NRO DNI": "41779438",
+                "DNI ENCONTRADO": "ABRAHAM NOGUERA PIZARRO"
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "11009129",
+                "PARTIDA ENCONTRADO": "BANCO INTERNACIONAL DEL PERU S.A.A."
+            }
+        ]
+    },
+    "K45936.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "09997299",
+                "DNI ENCONTRADO": "ALBERTO TAMASHIRO AHANE"
+            },
+            {
+                "NRO DNI": "09807289",
+                "DNI ENCONTRADO": "FREDDY SANTIAGO SALCEDO CASASOLA"
+            }
+        ]
+    },
+    "K45939.docx": {
+        "DNI": [
+            {
+                "NRO DNI": "20009395",
+                "DNI ENCONTRADO": "ELIZABETH NANCY BRAVO PAREJAS"
+            },
+            {
+                "NRO DNI": "42285115",
+                "DNI ENCONTRADO": "IVAN MONTES LOPEZ"
+            }
+        ],
+        "RUC": [
+            {
+                "NRO RUC": "20469962246",
+                "RUC ENCONTRADO": " ROCK DRILL CONTRATISTAS CIVILES Y MINEROS S.A.C."
+            }
+        ],
+        "partidE": [
+            {
+                "NRO PARTIDA": "11181190",
+                "PARTIDA ENCONTRADO": "ROCK DRILL CONTRATISTAS CIVILES Y MINEROS S.A.C."
             }
         ]
     }

@@ -94,8 +94,9 @@ class scrapingPages:
             except:
                 self.pageSunat.goto(self.urlSunat)
                 self.pageSunat.wait_for_load_state(timeout=1000)
-                rucName="Ruc not found"
+                rucName="Ruc-not found"
                 print("Ruc not found")
+            rucName=rucName.split("-")[1]
             return rucName
     def start_Sunarp(self):
         self.pageSunarp = self.context.new_page()
