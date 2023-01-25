@@ -2,6 +2,7 @@ from playwright.sync_api import sync_playwright
 from scrapDocxs import dataWord
 from utilities import pathsManager
 import json
+from apiConsultaRuc import getRuc
 import os
 rucNotFound=True
 class scrapingPages:
@@ -97,6 +98,8 @@ class scrapingPages:
                 rucName="Ruc-not found"
                 print("Ruc not found")
             rucName=rucName.split("-")[1]
+            if rucName=="not found":
+                rucName=getRuc(ruc)
             return rucName
     def start_Sunarp(self):
         self.pageSunarp = self.context.new_page()
